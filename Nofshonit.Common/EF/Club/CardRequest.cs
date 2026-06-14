@@ -1,0 +1,106 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace Nofshonit.Common.EF.Club
+{
+    public partial class CardRequest
+    {
+        public long RequestId { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public string MemberId { get; set; }
+        public short? RequestProduct { get; set; }
+        public short? BankId { get; set; }
+        public short? BranchId { get; set; }
+        public short? AccountType { get; set; }
+        public string Account { get; set; }
+        public int? CardType { get; set; }
+        public short? UsageType { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public byte? Gender { get; set; }
+        public string MaidenName { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public short? FamilyStatus { get; set; }
+        public short? NumOfChildren { get; set; }
+        public short? Education { get; set; }
+        public byte? PhoneType { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public short? AddressType { get; set; }
+        public string Street { get; set; }
+        public short? HouseNumber { get; set; }
+        public string Entrance { get; set; }
+        public string Apartmernt { get; set; }
+        public string Pobox { get; set; }
+        public string CityName { get; set; }
+        public string ZipCode { get; set; }
+        public short? MailingType { get; set; }
+        public string CurrentCardType { get; set; }
+        public byte[] EncryptedCardNumber { get; set; }
+        public string Last4Digits { get; set; }
+        public string ExpirationDate { get; set; }
+        public bool? IsHomeOwner { get; set; }
+        public byte? NumberOfRooms { get; set; }
+        public string WorkPlace { get; set; }
+        public short? WorkStatus { get; set; }
+        public byte? WorkSeniority { get; set; }
+        public byte? WorkingFamilyMembers { get; set; }
+        public short? NetIncome { get; set; }
+        public byte? AccountSeniority { get; set; }
+        public bool? IsSharedAccount { get; set; }
+        public string SharedFirstame { get; set; }
+        public string SharedLastName { get; set; }
+        public string SharedMemberId { get; set; }
+        public byte? ChargeDay { get; set; }
+        public string PersonalQuestion { get; set; }
+        public short? ExpectedAverageUsage { get; set; }
+        public byte? IsPublicFigure { get; set; }
+        public string FigureFirstname { get; set; }
+        public string FigureLastName { get; set; }
+        public int? FixedChargeAmount { get; set; }
+        public short? WithdrawalTrack { get; set; }
+        public byte? BenefitTrack { get; set; }
+        public byte? VoiceTrack { get; set; }
+        public bool? AllowInfoPage { get; set; }
+        public string InfoPageCode { get; set; }
+        public bool? AllowOnlineInfo { get; set; }
+        public bool? MonthlyChargesRedirect { get; set; }
+        public byte[] RedirectCard1 { get; set; }
+        public string RedirectCard14digits { get; set; }
+        public byte[] RedirectCard2 { get; set; }
+        public string RedirectCard24digits { get; set; }
+        public byte[] RedirectCard3 { get; set; }
+        public string RedirectCard34digits { get; set; }
+        public string EnglishFirstName { get; set; }
+        public string EnglishLastName { get; set; }
+        public string ClubCode { get; set; }
+        public DateTime? RegistrationDate { get; set; }
+        public string RequestSource { get; set; }
+        public string SubRequestSource { get; set; }
+        public byte? YearOfMigration { get; set; }
+        public string BankName { get; set; }
+        public string WorkDescription { get; set; }
+        public byte? YearsOfCardUsage { get; set; }
+        public byte? AverageCashWithdrawal { get; set; }
+        public bool? IsMailingDiffrent { get; set; }
+        public string MailingStreet { get; set; }
+        public short? MailingHouseNumber { get; set; }
+        public string MailingEntrance { get; set; }
+        public string MailingApartmernt { get; set; }
+        public bool Submitted { get; set; }
+        public string MailingCity { get; set; }
+        public string MailingZipCode { get; set; }
+        public string MailingPobox { get; set; }
+        public string AccountOwnerName { get; set; }
+        public bool? IsSentRequest { get; set; }
+        public bool? HasPicture { get; set; }
+        public short? LoginType { get; set; }
+        public string AcountOwnerName { get; set; }
+        public DateTime? RequestDate { get; set; }
+        public DateTime? Picturedate { get; set; }
+        public string ClientPassword { get; set; }
+        public byte? StudentCardRequest { get; set; }
+        public DateTime? DateToLeumiCard { get; set; }
+        public int? DegreeCode { get; set; }
+    }
+}

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetStockResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="lstStocks" type="tns:ArrayOfVariantStock" />
+            <s:element minOccurs="0" maxOccurs="1" name="dBname" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="orgId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfVariantStock">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="VariantStock" nillable="true" type="tns:VariantStock" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="VariantStock">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FullBarCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsTrade" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetStockResponseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStockResponseResult" type="tns:ArrayOfVariantStockResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfVariantStockResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="VariantStockResult" nillable="true" type="tns:VariantStockResult" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="VariantStockResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FullBarCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="CheckStockSeccsess" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetTotalBuyPerDay">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="dtCheck" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="dBname" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="orgId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="stockId" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTotalBuyPerDayResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetTotalBuyPerDayResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDataFromMemeory">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="stockid" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDataFromMemeoryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetDataFromMemeoryResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetDataMemeory">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="dBname" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="orgId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetDataMemeoryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SetDataMemeoryResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ClearMemoryCache">
+        <s:complexType />
+      </s:element>
+      <s:element name="ClearMemoryCacheResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetStockResponseSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStockResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStockResponseSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStockResponseResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTotalBuyPerDaySoapIn">
+    <wsdl:part name="parameters" element="tns:GetTotalBuyPerDay" />
+  </wsdl:message>
+  <wsdl:message name="GetTotalBuyPerDaySoapOut">
+    <wsdl:part name="parameters" element="tns:GetTotalBuyPerDayResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDataFromMemeorySoapIn">
+    <wsdl:part name="parameters" element="tns:GetDataFromMemeory" />
+  </wsdl:message>
+  <wsdl:message name="GetDataFromMemeorySoapOut">
+    <wsdl:part name="parameters" element="tns:GetDataFromMemeoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetDataMemeorySoapIn">
+    <wsdl:part name="parameters" element="tns:SetDataMemeory" />
+  </wsdl:message>
+  <wsdl:message name="SetDataMemeorySoapOut">
+    <wsdl:part name="parameters" element="tns:SetDataMemeoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ClearMemoryCacheSoapIn">
+    <wsdl:part name="parameters" element="tns:ClearMemoryCache" />
+  </wsdl:message>
+  <wsdl:message name="ClearMemoryCacheSoapOut">
+    <wsdl:part name="parameters" element="tns:ClearMemoryCacheResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="GetStockResponse">
+      <wsdl:input message="tns:GetStockResponseSoapIn" />
+      <wsdl:output message="tns:GetStockResponseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTotalBuyPerDay">
+      <wsdl:input message="tns:GetTotalBuyPerDaySoapIn" />
+      <wsdl:output message="tns:GetTotalBuyPerDaySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDataFromMemeory">
+      <wsdl:input message="tns:GetDataFromMemeorySoapIn" />
+      <wsdl:output message="tns:GetDataFromMemeorySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetDataMemeory">
+      <wsdl:input message="tns:SetDataMemeorySoapIn" />
+      <wsdl:output message="tns:SetDataMemeorySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ClearMemoryCache">
+      <wsdl:input message="tns:ClearMemoryCacheSoapIn" />
+      <wsdl:output message="tns:ClearMemoryCacheSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetStockResponse">
+      <soap:operation soapAction="http://tempuri.org/GetStockResponse" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTotalBuyPerDay">
+      <soap:operation soapAction="http://tempuri.org/GetTotalBuyPerDay" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDataFromMemeory">
+      <soap:operation soapAction="http://tempuri.org/GetDataFromMemeory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDataMemeory">
+      <soap:operation soapAction="http://tempuri.org/SetDataMemeory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClearMemoryCache">
+      <soap:operation soapAction="http://tempuri.org/ClearMemoryCache" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetStockResponse">
+      <soap12:operation soapAction="http://tempuri.org/GetStockResponse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTotalBuyPerDay">
+      <soap12:operation soapAction="http://tempuri.org/GetTotalBuyPerDay" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDataFromMemeory">
+      <soap12:operation soapAction="http://tempuri.org/GetDataFromMemeory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetDataMemeory">
+      <soap12:operation soapAction="http://tempuri.org/SetDataMemeory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ClearMemoryCache">
+      <soap12:operation soapAction="http://tempuri.org/ClearMemoryCache" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="http://172.29.90.16/CheckStockWS/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="http://172.29.90.16/CheckStockWS/Service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

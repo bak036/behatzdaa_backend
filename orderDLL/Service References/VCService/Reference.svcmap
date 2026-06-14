@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d2a3f33e-1344-4f17-ab80-00b18b9bce3c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://ValueCardService/ValueCard/ValueCardInterface.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ValueCardInterface.disco" MetadataType="Disco" ID="1cdd12f4-d709-467f-92d0-ca82c6956ef2" SourceId="1" SourceUrl="http://valuecardservice/ValueCard/ValueCardInterface.svc?disco" />
+    <MetadataFile FileName="ValueCardInterface.wsdl" MetadataType="Wsdl" ID="50891aba-e3de-4ec1-b7dd-714d6788e33e" SourceId="1" SourceUrl="http://valuecardservice/ValueCard/ValueCardInterface.svc?wsdl" />
+    <MetadataFile FileName="ValueCardInterface.xsd" MetadataType="Schema" ID="153327aa-e823-4849-b4bf-db4cc0de2304" SourceId="1" SourceUrl="http://valuecardservice/ValueCard/ValueCardInterface.svc?xsd=xsd2" />
+    <MetadataFile FileName="ValueCardInterface1.xsd" MetadataType="Schema" ID="d5fb9a02-e3ee-4ad1-aa28-c740a8c38e46" SourceId="1" SourceUrl="http://valuecardservice/ValueCard/ValueCardInterface.svc?xsd=xsd0" />
+    <MetadataFile FileName="ValueCardInterface2.xsd" MetadataType="Schema" ID="503a6702-4751-4464-9ca1-bdfd68501150" SourceId="1" SourceUrl="http://valuecardservice/ValueCard/ValueCardInterface.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

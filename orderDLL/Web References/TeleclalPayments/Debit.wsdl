@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.telemessersms.co.il/webservice/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://www.telemessersms.co.il/webservice/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.telemessersms.co.il/webservice/">
+      <s:element name="DebitCardFull">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CreditCardNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CVV" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ExpireDate" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="TotalPay" type="s:float" />
+            <s:element minOccurs="1" maxOccurs="1" name="NumOfPayment" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="FirstPayment" type="s:float" />
+            <s:element minOccurs="1" maxOccurs="1" name="EachPayment" type="s:float" />
+            <s:element minOccurs="1" maxOccurs="1" name="TransctionType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CreditTerms" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="StarsAmount" type="s:float" />
+            <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="CheckID" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DebitCardFullResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DebitCardFullResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DebitCardFullDebitCredit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CreditCardNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CVV" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ExpireDate" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="TotalPay" type="s:float" />
+            <s:element minOccurs="1" maxOccurs="1" name="NumOfPayment" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="FirstPayment" type="s:float" />
+            <s:element minOccurs="1" maxOccurs="1" name="EachPayment" type="s:float" />
+            <s:element minOccurs="1" maxOccurs="1" name="TransctionType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CreditTerms" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="StarsAmount" type="s:float" />
+            <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="CheckID" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="DebitCredit" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DebitCardFullDebitCreditResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DebitCardFullDebitCreditResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="DebitCardFullSoapIn">
+    <wsdl:part name="parameters" element="tns:DebitCardFull" />
+  </wsdl:message>
+  <wsdl:message name="DebitCardFullSoapOut">
+    <wsdl:part name="parameters" element="tns:DebitCardFullResponse" />
+  </wsdl:message>
+  <wsdl:message name="DebitCardFullDebitCreditSoapIn">
+    <wsdl:part name="parameters" element="tns:DebitCardFullDebitCredit" />
+  </wsdl:message>
+  <wsdl:message name="DebitCardFullDebitCreditSoapOut">
+    <wsdl:part name="parameters" element="tns:DebitCardFullDebitCreditResponse" />
+  </wsdl:message>
+  <wsdl:message name="DebitCardFullHttpGetIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+    <wsdl:part name="CreditCardNumber" type="s:string" />
+    <wsdl:part name="CVV" type="s:string" />
+    <wsdl:part name="ExpireDate" type="s:string" />
+    <wsdl:part name="TotalPay" type="s:string" />
+    <wsdl:part name="NumOfPayment" type="s:string" />
+    <wsdl:part name="FirstPayment" type="s:string" />
+    <wsdl:part name="EachPayment" type="s:string" />
+    <wsdl:part name="TransctionType" type="s:string" />
+    <wsdl:part name="CreditTerms" type="s:string" />
+    <wsdl:part name="StarsAmount" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+    <wsdl:part name="Phone" type="s:string" />
+    <wsdl:part name="CheckID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DebitCardFullHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="DebitCardFullDebitCreditHttpGetIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+    <wsdl:part name="CreditCardNumber" type="s:string" />
+    <wsdl:part name="CVV" type="s:string" />
+    <wsdl:part name="ExpireDate" type="s:string" />
+    <wsdl:part name="TotalPay" type="s:string" />
+    <wsdl:part name="NumOfPayment" type="s:string" />
+    <wsdl:part name="FirstPayment" type="s:string" />
+    <wsdl:part name="EachPayment" type="s:string" />
+    <wsdl:part name="TransctionType" type="s:string" />
+    <wsdl:part name="CreditTerms" type="s:string" />
+    <wsdl:part name="StarsAmount" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+    <wsdl:part name="Phone" type="s:string" />
+    <wsdl:part name="CheckID" type="s:string" />
+    <wsdl:part name="DebitCredit" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DebitCardFullDebitCreditHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="DebitCardFullHttpPostIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+    <wsdl:part name="CreditCardNumber" type="s:string" />
+    <wsdl:part name="CVV" type="s:string" />
+    <wsdl:part name="ExpireDate" type="s:string" />
+    <wsdl:part name="TotalPay" type="s:string" />
+    <wsdl:part name="NumOfPayment" type="s:string" />
+    <wsdl:part name="FirstPayment" type="s:string" />
+    <wsdl:part name="EachPayment" type="s:string" />
+    <wsdl:part name="TransctionType" type="s:string" />
+    <wsdl:part name="CreditTerms" type="s:string" />
+    <wsdl:part name="StarsAmount" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+    <wsdl:part name="Phone" type="s:string" />
+    <wsdl:part name="CheckID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DebitCardFullHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="DebitCardFullDebitCreditHttpPostIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+    <wsdl:part name="CreditCardNumber" type="s:string" />
+    <wsdl:part name="CVV" type="s:string" />
+    <wsdl:part name="ExpireDate" type="s:string" />
+    <wsdl:part name="TotalPay" type="s:string" />
+    <wsdl:part name="NumOfPayment" type="s:string" />
+    <wsdl:part name="FirstPayment" type="s:string" />
+    <wsdl:part name="EachPayment" type="s:string" />
+    <wsdl:part name="TransctionType" type="s:string" />
+    <wsdl:part name="CreditTerms" type="s:string" />
+    <wsdl:part name="StarsAmount" type="s:string" />
+    <wsdl:part name="ID" type="s:string" />
+    <wsdl:part name="Phone" type="s:string" />
+    <wsdl:part name="CheckID" type="s:string" />
+    <wsdl:part name="DebitCredit" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DebitCardFullDebitCreditHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="DebitSoap">
+    <wsdl:operation name="DebitCardFull">
+      <wsdl:input message="tns:DebitCardFullSoapIn" />
+      <wsdl:output message="tns:DebitCardFullSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DebitCardFullDebitCredit">
+      <wsdl:input message="tns:DebitCardFullDebitCreditSoapIn" />
+      <wsdl:output message="tns:DebitCardFullDebitCreditSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="DebitHttpGet">
+    <wsdl:operation name="DebitCardFull">
+      <wsdl:input message="tns:DebitCardFullHttpGetIn" />
+      <wsdl:output message="tns:DebitCardFullHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DebitCardFullDebitCredit">
+      <wsdl:input message="tns:DebitCardFullDebitCreditHttpGetIn" />
+      <wsdl:output message="tns:DebitCardFullDebitCreditHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="DebitHttpPost">
+    <wsdl:operation name="DebitCardFull">
+      <wsdl:input message="tns:DebitCardFullHttpPostIn" />
+      <wsdl:output message="tns:DebitCardFullHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DebitCardFullDebitCredit">
+      <wsdl:input message="tns:DebitCardFullDebitCreditHttpPostIn" />
+      <wsdl:output message="tns:DebitCardFullDebitCreditHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DebitSoap" type="tns:DebitSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DebitCardFull">
+      <soap:operation soapAction="http://www.telemessersms.co.il/webservice/DebitCardFull" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DebitCardFullDebitCredit">
+      <soap:operation soapAction="http://www.telemessersms.co.il/webservice/DebitCardFullDebitCredit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DebitSoap12" type="tns:DebitSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DebitCardFull">
+      <soap12:operation soapAction="http://www.telemessersms.co.il/webservice/DebitCardFull" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DebitCardFullDebitCredit">
+      <soap12:operation soapAction="http://www.telemessersms.co.il/webservice/DebitCardFullDebitCredit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DebitHttpGet" type="tns:DebitHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="DebitCardFull">
+      <http:operation location="/DebitCardFull" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DebitCardFullDebitCredit">
+      <http:operation location="/DebitCardFullDebitCredit" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DebitHttpPost" type="tns:DebitHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="DebitCardFull">
+      <http:operation location="/DebitCardFull" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DebitCardFullDebitCredit">
+      <http:operation location="/DebitCardFullDebitCredit" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Debit">
+    <wsdl:port name="DebitSoap" binding="tns:DebitSoap">
+      <soap:address location="https://www.telemesser.co.il/TeleclalPayments/Debit.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DebitSoap12" binding="tns:DebitSoap12">
+      <soap12:address location="https://www.telemesser.co.il/TeleclalPayments/Debit.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DebitHttpGet" binding="tns:DebitHttpGet">
+      <http:address location="https://www.telemesser.co.il/TeleclalPayments/Debit.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DebitHttpPost" binding="tns:DebitHttpPost">
+      <http:address location="https://www.telemesser.co.il/TeleclalPayments/Debit.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

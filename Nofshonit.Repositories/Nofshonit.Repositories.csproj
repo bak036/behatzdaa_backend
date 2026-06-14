@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ClubModel\ClubContextFactory.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClubModel\" />
+    <Folder Include="HelperFunctions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nofshonit.Common\Nofshonit.Common.csproj" />
+    <ProjectReference Include="..\Nofshonit.Infrastructure\Nofshonit.Infrastructure.csproj" />
+    <ProjectReference Include="..\TicketsHubRepository\TicketsHubRepository.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Autofac.Configuration" Version="4.1.0" />
+    <PackageReference Include="Azure.Identity" Version="1.13.2" />
+    <PackageReference Include="DtsLoggger" Version="2.0.3" />
+    <PackageReference Include="Google.Apis" Version="1.38.2" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.38.2" />
+    <PackageReference Include="Google.Apis.Gmail.v1" Version="1.38.0.1543" />
+    <PackageReference Include="Google.Apis.Plus.v1" Version="1.38.0.1541" />
+    <PackageReference Include="Google.Apis.ServiceUser.v1" Version="1.36.0.1373" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.4" />
+    <PackageReference Include="ImpromptuInterface" Version="7.0.1" />
+    <PackageReference Include="Microsoft.AspNet.WebApi" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.EventLog" Version="8.0.0" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.4.0" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.0" />
+    <PackageReference Include="SSH.NET" Version="2024.1.0" />
+    <PackageReference Include="Swashbuckle" Version="5.6.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.1" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Runtime.Caching" Version="7.0.0" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="4.7.1" />
+    <PackageReference Include="System.Text.Json" Version="9.0.1" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(ProjectDir)bin\Debug\netcoreapp2.2\Nofshonit.Repositories.dll&quot; &quot;$(SolutionDir)Nofshonit.Api\bin\Debug\netcoreapp2.2&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\Debug\netcoreapp2.2\Nofshonit.Repositories.pdb&quot; &quot;$(SolutionDir)Nofshonit.Api\bin\Debug\netcoreapp2.2&quot; /Y" />
+  </Target>
+</Project>

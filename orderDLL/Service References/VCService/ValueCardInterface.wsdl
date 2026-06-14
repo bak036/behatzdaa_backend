@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="ValueCardInterface" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://valuecardservice/ValueCard/ValueCardInterface.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://valuecardservice/ValueCard/ValueCardInterface.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://valuecardservice/ValueCard/ValueCardInterface.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/ValueCardDll" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IValueCard_VlcInsertOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:VlcInsertOrder" />
+  </wsdl:message>
+  <wsdl:message name="IValueCard_VlcInsertOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VlcInsertOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValueCard_VlcCancelOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:VlcCancelOrder" />
+  </wsdl:message>
+  <wsdl:message name="IValueCard_VlcCancelOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VlcCancelOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValueCard_VlcChangeCardNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:VlcChangeCardNumber" />
+  </wsdl:message>
+  <wsdl:message name="IValueCard_VlcChangeCardNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VlcChangeCardNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValueCard_VlcDeActivateOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:VlcDeActivateOrder" />
+  </wsdl:message>
+  <wsdl:message name="IValueCard_VlcDeActivateOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VlcDeActivateOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IValueCard_VlcActivateOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:VlcActivateOrder" />
+  </wsdl:message>
+  <wsdl:message name="IValueCard_VlcActivateOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VlcActivateOrderResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IValueCard">
+    <wsdl:operation name="VlcInsertOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValueCard/VlcInsertOrder" message="tns:IValueCard_VlcInsertOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValueCard/VlcInsertOrderResponse" message="tns:IValueCard_VlcInsertOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VlcCancelOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValueCard/VlcCancelOrder" message="tns:IValueCard_VlcCancelOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValueCard/VlcCancelOrderResponse" message="tns:IValueCard_VlcCancelOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VlcChangeCardNumber">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValueCard/VlcChangeCardNumber" message="tns:IValueCard_VlcChangeCardNumber_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValueCard/VlcChangeCardNumberResponse" message="tns:IValueCard_VlcChangeCardNumber_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VlcDeActivateOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValueCard/VlcDeActivateOrder" message="tns:IValueCard_VlcDeActivateOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValueCard/VlcDeActivateOrderResponse" message="tns:IValueCard_VlcDeActivateOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VlcActivateOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IValueCard/VlcActivateOrder" message="tns:IValueCard_VlcActivateOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IValueCard/VlcActivateOrderResponse" message="tns:IValueCard_VlcActivateOrder_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IValueCard" type="tns:IValueCard">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="VlcInsertOrder">
+      <soap:operation soapAction="http://tempuri.org/IValueCard/VlcInsertOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VlcCancelOrder">
+      <soap:operation soapAction="http://tempuri.org/IValueCard/VlcCancelOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VlcChangeCardNumber">
+      <soap:operation soapAction="http://tempuri.org/IValueCard/VlcChangeCardNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VlcDeActivateOrder">
+      <soap:operation soapAction="http://tempuri.org/IValueCard/VlcDeActivateOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VlcActivateOrder">
+      <soap:operation soapAction="http://tempuri.org/IValueCard/VlcActivateOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ValueCardInterface">
+    <wsdl:port name="BasicHttpBinding_IValueCard" binding="tns:BasicHttpBinding_IValueCard">
+      <soap:address location="http://valuecardservice/ValueCard/ValueCardInterface.svc/ValueCardInterface" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

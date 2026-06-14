@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+	<section name="nlog" type="NLog.Config.ConfigSectionHandler, NLog"/>
+
+  </configSections>
+  <nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<targets>
+	  <target name="default" xsi:type="File"
+				fileName="C:\logs\log-${shortdate}.txt"
+				archiveFileName="C:\logs\archives\log-${shortdate}.{#}.txt"
+				archiveEvery="Day"
+				archiveNumbering="Rolling"
+				maxArchiveFiles="1000"
+		layout="${date:format=yyyy-MM-dd HH\:mm\:ss} | ${level} | ${threadid} | ${message}"/>
+	  <target name="errors" xsi:type="File"
+				fileName="C:\logs\log-error-${shortdate}.txt"
+				archiveFileName="C:\logs\archives\log-error-${shortdate}.{#}.txt"
+				archiveEvery="Day"
+				archiveNumbering="Rolling"
+				maxArchiveFiles="1000"
+		layout="${date:format=yyyy-MM-dd HH\:mm\:ss} | ${level} | ${threadid} | ${message}"/>
+	</targets>
+	<rules>
+	  <logger name="*" writeTo="default" />
+	  <logger name="*" minlevel="Error" writeTo="errors" />
+	</rules>
+  </nlog>
+
+</configuration>

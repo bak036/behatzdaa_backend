@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.telemessersms.co.il/webservice/" xmlns:s1="http://www.telemessersms.co.il/webservice/AbstractTypes" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://www.telemessersms.co.il/webservice/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.telemessersms.co.il/webservice/">
+      <s:element name="IsSmsAllowedInThisSchedule">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EncryptPassword" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="DeliveryDelayInMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IsSmsAllowedInThisScheduleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IsSmsAllowedInThisScheduleResult" type="tns:Result" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Result">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Messages" type="tns:ArrayOfMessage" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfMessage">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Message" nillable="true" type="tns:Message" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Message">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Cli" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Operator" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetCellPhoneOperator">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EncryptPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CellPhone" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCellPhoneOperatorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCellPhoneOperatorResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMessagesCredit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EncryptPassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMessagesCreditResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMessagesCreditResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMessagesDelivery">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EncryptPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MessagesID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMessagesDeliveryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMessagesDeliveryResult" type="tns:Result" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSms">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EncryptPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Subscribers" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SenderName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="DeliveryDelayInMinutes" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="ExpirationDelayInMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSmsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendSmsResult" type="tns:Result" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSmsArray">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EncryptPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Subscribers" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Message" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="SenderName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="DeliveryDelayInMinutes" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="ExpirationDelayInMinutes" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SendSmsArrayResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendSmsArrayResult" type="tns:Result" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Result" nillable="true" type="tns:Result" />
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+    <s:schema targetNamespace="http://www.telemessersms.co.il/webservice/AbstractTypes">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:complexType name="StringArray">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="String" type="s:string" />
+            </s:sequence>
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="IsSmsAllowedInThisScheduleSoapIn">
+    <wsdl:part name="parameters" element="tns:IsSmsAllowedInThisSchedule" />
+  </wsdl:message>
+  <wsdl:message name="IsSmsAllowedInThisScheduleSoapOut">
+    <wsdl:part name="parameters" element="tns:IsSmsAllowedInThisScheduleResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCellPhoneOperatorSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCellPhoneOperator" />
+  </wsdl:message>
+  <wsdl:message name="GetCellPhoneOperatorSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCellPhoneOperatorResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesCreditSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMessagesCredit" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesCreditSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMessagesCreditResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesDeliverySoapIn">
+    <wsdl:part name="parameters" element="tns:GetMessagesDelivery" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesDeliverySoapOut">
+    <wsdl:part name="parameters" element="tns:GetMessagesDeliveryResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsSoapIn">
+    <wsdl:part name="parameters" element="tns:SendSms" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsSoapOut">
+    <wsdl:part name="parameters" element="tns:SendSmsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsArraySoapIn">
+    <wsdl:part name="parameters" element="tns:SendSmsArray" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsArraySoapOut">
+    <wsdl:part name="parameters" element="tns:SendSmsArrayResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsSmsAllowedInThisScheduleHttpGetIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="EncryptPassword" type="s:string" />
+    <wsdl:part name="DeliveryDelayInMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IsSmsAllowedInThisScheduleHttpGetOut">
+    <wsdl:part name="Body" element="tns:Result" />
+  </wsdl:message>
+  <wsdl:message name="GetCellPhoneOperatorHttpGetIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="EncryptPassword" type="s:string" />
+    <wsdl:part name="CellPhone" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCellPhoneOperatorHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesCreditHttpGetIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="EncryptPassword" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesCreditHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesDeliveryHttpGetIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="EncryptPassword" type="s:string" />
+    <wsdl:part name="MessagesID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesDeliveryHttpGetOut">
+    <wsdl:part name="Body" element="tns:Result" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsHttpGetIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="EncryptPassword" type="s:string" />
+    <wsdl:part name="Subscribers" type="s:string" />
+    <wsdl:part name="Message" type="s:string" />
+    <wsdl:part name="SenderName" type="s:string" />
+    <wsdl:part name="DeliveryDelayInMinutes" type="s:string" />
+    <wsdl:part name="ExpirationDelayInMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsHttpGetOut">
+    <wsdl:part name="Body" element="tns:Result" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsArrayHttpGetIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="EncryptPassword" type="s:string" />
+    <wsdl:part name="Subscribers" type="s:string" />
+    <wsdl:part name="Message" type="s1:StringArray" />
+    <wsdl:part name="SenderName" type="s:string" />
+    <wsdl:part name="DeliveryDelayInMinutes" type="s:string" />
+    <wsdl:part name="ExpirationDelayInMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsArrayHttpGetOut">
+    <wsdl:part name="Body" element="tns:Result" />
+  </wsdl:message>
+  <wsdl:message name="IsSmsAllowedInThisScheduleHttpPostIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="EncryptPassword" type="s:string" />
+    <wsdl:part name="DeliveryDelayInMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="IsSmsAllowedInThisScheduleHttpPostOut">
+    <wsdl:part name="Body" element="tns:Result" />
+  </wsdl:message>
+  <wsdl:message name="GetCellPhoneOperatorHttpPostIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="EncryptPassword" type="s:string" />
+    <wsdl:part name="CellPhone" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCellPhoneOperatorHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesCreditHttpPostIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="EncryptPassword" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesCreditHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesDeliveryHttpPostIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="EncryptPassword" type="s:string" />
+    <wsdl:part name="MessagesID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesDeliveryHttpPostOut">
+    <wsdl:part name="Body" element="tns:Result" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsHttpPostIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="EncryptPassword" type="s:string" />
+    <wsdl:part name="Subscribers" type="s:string" />
+    <wsdl:part name="Message" type="s:string" />
+    <wsdl:part name="SenderName" type="s:string" />
+    <wsdl:part name="DeliveryDelayInMinutes" type="s:string" />
+    <wsdl:part name="ExpirationDelayInMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsHttpPostOut">
+    <wsdl:part name="Body" element="tns:Result" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsArrayHttpPostIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="EncryptPassword" type="s:string" />
+    <wsdl:part name="Subscribers" type="s:string" />
+    <wsdl:part name="Message" type="s1:StringArray" />
+    <wsdl:part name="SenderName" type="s:string" />
+    <wsdl:part name="DeliveryDelayInMinutes" type="s:string" />
+    <wsdl:part name="ExpirationDelayInMinutes" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendSmsArrayHttpPostOut">
+    <wsdl:part name="Body" element="tns:Result" />
+  </wsdl:message>
+  <wsdl:portType name="SendSmsWSSoap">
+    <wsdl:operation name="IsSmsAllowedInThisSchedule">
+      <wsdl:input message="tns:IsSmsAllowedInThisScheduleSoapIn" />
+      <wsdl:output message="tns:IsSmsAllowedInThisScheduleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCellPhoneOperator">
+      <wsdl:input message="tns:GetCellPhoneOperatorSoapIn" />
+      <wsdl:output message="tns:GetCellPhoneOperatorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesCredit">
+      <wsdl:input message="tns:GetMessagesCreditSoapIn" />
+      <wsdl:output message="tns:GetMessagesCreditSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesDelivery">
+      <wsdl:input message="tns:GetMessagesDeliverySoapIn" />
+      <wsdl:output message="tns:GetMessagesDeliverySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSms">
+      <wsdl:input message="tns:SendSmsSoapIn" />
+      <wsdl:output message="tns:SendSmsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSmsArray">
+      <wsdl:input message="tns:SendSmsArraySoapIn" />
+      <wsdl:output message="tns:SendSmsArraySoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="SendSmsWSHttpGet">
+    <wsdl:operation name="IsSmsAllowedInThisSchedule">
+      <wsdl:input message="tns:IsSmsAllowedInThisScheduleHttpGetIn" />
+      <wsdl:output message="tns:IsSmsAllowedInThisScheduleHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCellPhoneOperator">
+      <wsdl:input message="tns:GetCellPhoneOperatorHttpGetIn" />
+      <wsdl:output message="tns:GetCellPhoneOperatorHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesCredit">
+      <wsdl:input message="tns:GetMessagesCreditHttpGetIn" />
+      <wsdl:output message="tns:GetMessagesCreditHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesDelivery">
+      <wsdl:input message="tns:GetMessagesDeliveryHttpGetIn" />
+      <wsdl:output message="tns:GetMessagesDeliveryHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSms">
+      <wsdl:input message="tns:SendSmsHttpGetIn" />
+      <wsdl:output message="tns:SendSmsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSmsArray">
+      <wsdl:input message="tns:SendSmsArrayHttpGetIn" />
+      <wsdl:output message="tns:SendSmsArrayHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="SendSmsWSHttpPost">
+    <wsdl:operation name="IsSmsAllowedInThisSchedule">
+      <wsdl:input message="tns:IsSmsAllowedInThisScheduleHttpPostIn" />
+      <wsdl:output message="tns:IsSmsAllowedInThisScheduleHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCellPhoneOperator">
+      <wsdl:input message="tns:GetCellPhoneOperatorHttpPostIn" />
+      <wsdl:output message="tns:GetCellPhoneOperatorHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesCredit">
+      <wsdl:input message="tns:GetMessagesCreditHttpPostIn" />
+      <wsdl:output message="tns:GetMessagesCreditHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesDelivery">
+      <wsdl:input message="tns:GetMessagesDeliveryHttpPostIn" />
+      <wsdl:output message="tns:GetMessagesDeliveryHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSms">
+      <wsdl:input message="tns:SendSmsHttpPostIn" />
+      <wsdl:output message="tns:SendSmsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSmsArray">
+      <wsdl:input message="tns:SendSmsArrayHttpPostIn" />
+      <wsdl:output message="tns:SendSmsArrayHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SendSmsWSSoap" type="tns:SendSmsWSSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsSmsAllowedInThisSchedule">
+      <soap:operation soapAction="http://www.telemessersms.co.il/webservice/IsSmsAllowedInThisSchedule" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCellPhoneOperator">
+      <soap:operation soapAction="http://www.telemessersms.co.il/webservice/GetCellPhoneOperator" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesCredit">
+      <soap:operation soapAction="http://www.telemessersms.co.il/webservice/GetMessagesCredit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesDelivery">
+      <soap:operation soapAction="http://www.telemessersms.co.il/webservice/GetMessagesDelivery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSms">
+      <soap:operation soapAction="http://www.telemessersms.co.il/webservice/SendSms" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSmsArray">
+      <soap:operation soapAction="http://www.telemessersms.co.il/webservice/SendSmsArray" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SendSmsWSSoap12" type="tns:SendSmsWSSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsSmsAllowedInThisSchedule">
+      <soap12:operation soapAction="http://www.telemessersms.co.il/webservice/IsSmsAllowedInThisSchedule" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCellPhoneOperator">
+      <soap12:operation soapAction="http://www.telemessersms.co.il/webservice/GetCellPhoneOperator" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesCredit">
+      <soap12:operation soapAction="http://www.telemessersms.co.il/webservice/GetMessagesCredit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesDelivery">
+      <soap12:operation soapAction="http://www.telemessersms.co.il/webservice/GetMessagesDelivery" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSms">
+      <soap12:operation soapAction="http://www.telemessersms.co.il/webservice/SendSms" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSmsArray">
+      <soap12:operation soapAction="http://www.telemessersms.co.il/webservice/SendSmsArray" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SendSmsWSHttpGet" type="tns:SendSmsWSHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="IsSmsAllowedInThisSchedule">
+      <http:operation location="/IsSmsAllowedInThisSchedule" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCellPhoneOperator">
+      <http:operation location="/GetCellPhoneOperator" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesCredit">
+      <http:operation location="/GetMessagesCredit" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesDelivery">
+      <http:operation location="/GetMessagesDelivery" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSms">
+      <http:operation location="/SendSms" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSmsArray">
+      <http:operation location="/SendSmsArray" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SendSmsWSHttpPost" type="tns:SendSmsWSHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="IsSmsAllowedInThisSchedule">
+      <http:operation location="/IsSmsAllowedInThisSchedule" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCellPhoneOperator">
+      <http:operation location="/GetCellPhoneOperator" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesCredit">
+      <http:operation location="/GetMessagesCredit" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesDelivery">
+      <http:operation location="/GetMessagesDelivery" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSms">
+      <http:operation location="/SendSms" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSmsArray">
+      <http:operation location="/SendSmsArray" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SendSmsWS">
+    <wsdl:port name="SendSmsWSSoap" binding="tns:SendSmsWSSoap">
+      <soap:address location="http://www.telemessersms.co.il/WebService/SendSmsWS.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SendSmsWSSoap12" binding="tns:SendSmsWSSoap12">
+      <soap12:address location="http://www.telemessersms.co.il/WebService/SendSmsWS.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SendSmsWSHttpGet" binding="tns:SendSmsWSHttpGet">
+      <http:address location="http://www.telemessersms.co.il/WebService/SendSmsWS.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SendSmsWSHttpPost" binding="tns:SendSmsWSHttpPost">
+      <http:address location="http://www.telemessersms.co.il/WebService/SendSmsWS.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
