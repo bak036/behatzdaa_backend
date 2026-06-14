@@ -340,7 +340,7 @@ log ""
 # STEP 1: Publishing .NET 8 project
 # ==================================================
 
-CSPROJ="$ROOT/DCards.Core.New/DCards.Core.New.csproj"
+CSPROJ="$ROOT/Nofshonit.Api/Nofshonit.Api.csproj"
 
 if [[ ! -f "$CSPROJ" ]]; then
     log "❌ Project file not found: $CSPROJ"

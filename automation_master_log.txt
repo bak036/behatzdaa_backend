@@ -1,0 +1,43 @@
+===================================================
+[ 2026-06-14 18:39:12 ] Log initialized
+===================================================
+[ 2026-06-14 18:39:12 ] 🔍 Project: behatzdaa_backend
+[ 2026-06-14 18:39:12 ] 🔍 Branch: PP
+[ 2026-06-14 18:39:13 ] 
+[ 2026-06-14 18:39:13 ] ===================================================
+[ 2026-06-14 18:39:13 ] 🔧 CHECKING & INSTALLING DEPENDENCIES
+[ 2026-06-14 18:39:13 ] ===================================================
+[ 2026-06-14 18:39:14 ] 
+[ 2026-06-14 18:39:14 ] 📦 [STEP 1/4] Checking PowerShell prerequisites...
+[ 2026-06-14 18:39:25 ]    ✓ PowerShell prerequisites already present
+[ 2026-06-14 18:39:25 ] 
+[ 2026-06-14 18:39:26 ] 📦 [STEP 2/4] Checking jq...
+[ 2026-06-14 18:39:26 ]    ✓ jq is ready
+[ 2026-06-14 18:39:26 ] 
+[ 2026-06-14 18:39:26 ] 📦 [STEP 3/4] Checking SQL Server PowerShell module...
+[ 2026-06-14 18:39:28 ]    ✓ SqlServer module ready
+[ 2026-06-14 18:39:28 ] 
+[ 2026-06-14 18:39:29 ] 📦 [STEP 4/4] Checking Robocopy...
+[ 2026-06-14 18:39:29 ]    ✓ Robocopy is ready
+[ 2026-06-14 18:39:30 ] 
+[ 2026-06-14 18:39:30 ] ===================================================
+[ 2026-06-14 18:39:30 ] ✓ All dependencies ready
+[ 2026-06-14 18:39:30 ] ===================================================
+[ 2026-06-14 18:39:31 ] 
+[ 2026-06-14 18:39:31 ] 🔗 Loading config from database...
+[ 2026-06-14 18:39:35 ]    ✓ Config loaded
+[ 2026-06-14 18:39:35 ] 
+[ 2026-06-14 18:39:36 ] ===================================================
+[ 2026-06-14 18:39:36 ] 🚀 DEPLOYMENT STARTED (SIMPLE MODE)
+[ 2026-06-14 18:39:36 ] ===================================================
+[ 2026-06-14 18:39:36 ] 
+[ 2026-06-14 18:39:37 ] 📂 Preparing publish directory...
+[ 2026-06-14 18:39:38 ]     Publish base: D:\Publish
+[ 2026-06-14 18:39:38 ]     Project folder: behatzdaa_backend
+[ 2026-06-14 18:39:38 ]     Full path: D:\Publish\behatzdaa_backend
+[ 2026-06-14 18:39:38 ]     No existing folder found
+[ 2026-06-14 18:39:38 ]     Creating fresh directory...
+[ 2026-06-14 18:39:39 ]    � Fresh directory created
+[ 2026-06-14 18:39:39 ] SUCCESS
+[ 2026-06-14 18:39:39 ] 
+[ 2026-06-14 18:39:39 ] ❌ Project file not found: C:/Users/alexk/Desktop/Automation/BitBuketProject/behatzdaa_backend/DCards.Core.New/DCards.Core.New.csproj
