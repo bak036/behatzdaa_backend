@@ -2,7 +2,6 @@
 # ===========================================================
 # deploy_PP.sh - DEPLOYMENT SCRIPT - business editor
 # With automatic prerequisite installation
-# With automatic prerequisite installation
 # ===========================================================
 
 set -e
