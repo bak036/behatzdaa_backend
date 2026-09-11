@@ -127,3 +127,422 @@
 [ 2026-09-11 19:12:19 ] SUCCESS
 [ 2026-09-11 19:12:19 ] 
 [ 2026-09-11 19:12:19 ] 📦 Publishing Beyahad_Backend: Nofshonit.Api.csproj...
+[ 2026-09-11 19:24:36 ] 🔍 Project: behatzdaa_backend
+[ 2026-09-11 19:24:37 ] 🔍 Branch: PP
+[ 2026-09-11 19:24:37 ]    ✓ DB credentials loaded from .env (server: 172.29.92.20\sql2005, db: NofTest, user: alexk)
+[ 2026-09-11 19:24:37 ] 
+[ 2026-09-11 19:24:37 ] ===================================================
+[ 2026-09-11 19:24:37 ] 🔧 CHECKING & INSTALLING DEPENDENCIES
+[ 2026-09-11 19:24:38 ] ===================================================
+[ 2026-09-11 19:24:38 ] 
+[ 2026-09-11 19:24:38 ] 📦 [STEP 1/5] Checking PowerShell prerequisites...
+[ 2026-09-11 19:24:47 ]    ✓ PowerShell prerequisites already present
+[ 2026-09-11 19:24:47 ] 
+[ 2026-09-11 19:24:48 ] 📦 [STEP 2/5] Checking jq...
+[ 2026-09-11 19:24:48 ]    ✓ jq is ready
+[ 2026-09-11 19:24:48 ] 
+[ 2026-09-11 19:24:48 ] 📦 [STEP 3/5] Checking SQL Server PowerShell module...
+[ 2026-09-11 19:24:50 ]    ✓ SqlServer module ready
+[ 2026-09-11 19:24:50 ] 
+[ 2026-09-11 19:24:50 ] 📦 [STEP 4/5] Checking Robocopy...
+[ 2026-09-11 19:24:51 ]    ✓ Robocopy is ready
+[ 2026-09-11 19:24:51 ] 
+[ 2026-09-11 19:24:52 ] 📦 [STEP 5/5] Checking nuget.exe...
+[ 2026-09-11 19:24:52 ]    ✓ nuget.exe is ready (nuget.exe)
+[ 2026-09-11 19:24:52 ] 
+[ 2026-09-11 19:24:52 ] ===================================================
+[ 2026-09-11 19:24:53 ] ✓ All dependencies ready
+[ 2026-09-11 19:24:53 ] ===================================================
+[ 2026-09-11 19:24:53 ] 
+[ 2026-09-11 19:24:53 ] 🌐 Checking network connectivity to 172.29.92.20:1433...
+[ 2026-09-11 19:25:00 ]    ✓ Network reachable
+[ 2026-09-11 19:25:00 ] 
+[ 2026-09-11 19:25:01 ] 🔗 Loading config from database...
+[ 2026-09-11 19:25:04 ]    ✓ Config loaded
+[ 2026-09-11 19:25:04 ] 
+[ 2026-09-11 19:25:05 ] ===================================================
+[ 2026-09-11 19:25:05 ] 🚀 DEPLOYMENT STARTED
+[ 2026-09-11 19:25:05 ] ===================================================
+[ 2026-09-11 19:25:05 ] 
+[ 2026-09-11 19:25:06 ] 📂 Preparing publish directory...
+[ 2026-09-11 19:25:07 ]     Publish base: D:\Publish
+[ 2026-09-11 19:25:07 ]     Project folder: behatzdaa_backend
+[ 2026-09-11 19:25:07 ]     Full path: D:\Publish\behatzdaa_backend
+[ 2026-09-11 19:25:07 ]     Found existing folder, deleting...
+[ 2026-09-11 19:25:07 ]    � Existing folder deleted
+[ 2026-09-11 19:25:08 ]     Creating fresh directory...
+[ 2026-09-11 19:25:08 ]    � Fresh directory created
+[ 2026-09-11 19:25:08 ] SUCCESS
+[ 2026-09-11 19:25:08 ] 
+[ 2026-09-11 19:25:09 ] ===================================================
+[ 2026-09-11 19:25:09 ] 📥 RESTORING LEGACY NUGET PACKAGES (packages.config)
+[ 2026-09-11 19:25:09 ] ===================================================
+[ 2026-09-11 19:25:09 ]    Restoring packages for Behatzdaa_Backend.sln...
+[ 2026-09-11 19:25:24 ]    | MSBuild auto-detection: using msbuild version '17.14.23.42201' from 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\bin'.
+[ 2026-09-11 19:25:24 ]    | Restoring NuGet package Newtonsoft.Json.13.0.1.
+[ 2026-09-11 19:25:25 ]    | Restoring NuGet package DTS.Shared.3.2.9.
+[ 2026-09-11 19:25:25 ]    | Restoring NuGet package DtsLoggger.2.0.3.
+[ 2026-09-11 19:25:25 ]    | Restoring NuGet package Microsoft.Bcl.AsyncInterfaces.1.0.0.
+[ 2026-09-11 19:25:25 ]    | Restoring NuGet package NLog.4.7.5.
+[ 2026-09-11 19:25:26 ]    | Restoring NuGet package SSH.NET.2024.1.0.
+[ 2026-09-11 19:25:26 ]    | Restoring NuGet package System.Runtime.CompilerServices.Unsafe.4.5.2.
+[ 2026-09-11 19:25:27 ]    | Restoring NuGet package EntityFramework.6.5.1.
+[ 2026-09-11 19:25:27 ]    | Adding package 'DTS.Shared.3.2.9' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:29 ]    | Adding package 'DtsLoggger.2.0.3' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:29 ]    | Adding package 'EntityFramework.6.5.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:29 ]    | Adding package 'Microsoft.Bcl.AsyncInterfaces.1.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:30 ]    | Adding package 'SSH.NET.2024.1.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:30 ]    | Adding package 'System.Runtime.CompilerServices.Unsafe.4.5.2' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:31 ]    | Adding package 'Newtonsoft.Json.13.0.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:31 ]    | Added package 'DtsLoggger.2.0.3' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:31 ]    | Restoring NuGet package System.Threading.Tasks.Extensions.4.5.2.
+[ 2026-09-11 19:25:32 ]    | Adding package 'System.Threading.Tasks.Extensions.4.5.2' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:32 ]    | Added package 'DTS.Shared.3.2.9' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:32 ]    | Restoring NuGet package DtsStructuredLogger.2.0.0.
+[ 2026-09-11 19:25:32 ]    | Adding package 'DtsStructuredLogger.2.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:33 ]    | Added package 'DtsStructuredLogger.2.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:33 ]    | Restoring NuGet package Microsoft.AspNetCore.Hosting.Abstractions.2.2.0.
+[ 2026-09-11 19:25:33 ]    | Adding package 'Microsoft.AspNetCore.Hosting.Abstractions.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:33 ]    |   GET https://api.nuget.org/v3-flatcontainer/nlog/4.7.5/nlog.4.7.5.nupkg
+[ 2026-09-11 19:25:34 ]    |   OK https://api.nuget.org/v3-flatcontainer/nlog/4.7.5/nlog.4.7.5.nupkg 570ms
+[ 2026-09-11 19:25:34 ]    | Added package 'SSH.NET.2024.1.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:34 ]    | Restoring NuGet package Microsoft.AspNetCore.Hosting.Server.Abstractions.2.2.0.
+[ 2026-09-11 19:25:34 ]    | Adding package 'Microsoft.AspNetCore.Hosting.Server.Abstractions.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:35 ]    | Added package 'EntityFramework.6.5.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:35 ]    | Restoring NuGet package Microsoft.AspNetCore.Http.Abstractions.2.2.0.
+[ 2026-09-11 19:25:35 ]    | Adding package 'Microsoft.AspNetCore.Http.Abstractions.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:35 ]    | Added package 'Newtonsoft.Json.13.0.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:35 ]    | Restoring NuGet package Microsoft.AspNetCore.Http.Features.2.2.0.
+[ 2026-09-11 19:25:36 ]    | Adding package 'Microsoft.AspNetCore.Http.Features.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:36 ]    | Added package 'Microsoft.AspNetCore.Hosting.Server.Abstractions.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:36 ]    | Restoring NuGet package Microsoft.Bcl.AsyncInterfaces.5.0.0.
+[ 2026-09-11 19:25:36 ]    | Added package 'Microsoft.AspNetCore.Http.Abstractions.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:37 ]    | Restoring NuGet package Microsoft.CSharp.4.5.0.
+[ 2026-09-11 19:25:37 ]    | Added package 'Microsoft.AspNetCore.Hosting.Abstractions.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:37 ]    | Restoring NuGet package Microsoft.DotNet.PlatformAbstractions.2.0.4.
+[ 2026-09-11 19:25:37 ]    | Adding package 'Microsoft.Bcl.AsyncInterfaces.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:37 ]    | Added package 'Microsoft.AspNetCore.Http.Features.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:38 ]    | Restoring NuGet package Microsoft.Extensions.Configuration.5.0.0.
+[ 2026-09-11 19:25:38 ]    | Adding package 'Microsoft.CSharp.4.5.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:38 ]    | Adding package 'Microsoft.DotNet.PlatformAbstractions.2.0.4' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:38 ]    | Adding package 'Microsoft.Extensions.Configuration.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:38 ]    | Added package 'Microsoft.Bcl.AsyncInterfaces.1.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:39 ]    | Restoring NuGet package Microsoft.Extensions.Configuration.Abstractions.5.0.0.
+[ 2026-09-11 19:25:39 ]    | Adding package 'Microsoft.Extensions.Configuration.Abstractions.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:39 ]    | Added package 'System.Threading.Tasks.Extensions.4.5.2' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:39 ]    | Restoring NuGet package Microsoft.Extensions.Configuration.Binder.2.2.0.
+[ 2026-09-11 19:25:39 ]    | Added package 'Microsoft.Bcl.AsyncInterfaces.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:40 ]    | Restoring NuGet package Microsoft.Extensions.Configuration.FileExtensions.5.0.0.
+[ 2026-09-11 19:25:40 ]    | Added package 'System.Runtime.CompilerServices.Unsafe.4.5.2' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:40 ]    | Restoring NuGet package Microsoft.Extensions.Configuration.Json.5.0.0.
+[ 2026-09-11 19:25:40 ]    | Adding package 'Microsoft.Extensions.Configuration.FileExtensions.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:41 ]    | Added package 'Microsoft.Extensions.Configuration.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:41 ]    | Restoring NuGet package Microsoft.Extensions.DependencyInjection.2.2.0.
+[ 2026-09-11 19:25:41 ]    | Adding package 'Microsoft.Extensions.DependencyInjection.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:41 ]    | Adding package 'Microsoft.Extensions.Configuration.Json.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:41 ]    | Adding package 'Microsoft.Extensions.Configuration.Binder.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:42 ]    | Added package 'Microsoft.Extensions.Configuration.Abstractions.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:42 ]    | Added package 'Microsoft.Extensions.Configuration.Binder.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:42 ]    | Restoring NuGet package Microsoft.Extensions.DependencyInjection.Abstractions.3.1.8.
+[ 2026-09-11 19:25:42 ]    | Restoring NuGet package Microsoft.Extensions.DependencyModel.2.0.4.
+[ 2026-09-11 19:25:42 ]    | Added package 'Microsoft.Extensions.Configuration.FileExtensions.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:43 ]    | Restoring NuGet package Microsoft.Extensions.FileProviders.Abstractions.5.0.0.
+[ 2026-09-11 19:25:43 ]    | Adding package 'Microsoft.Extensions.DependencyInjection.Abstractions.3.1.8' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:43 ]    | Adding package 'Microsoft.Extensions.DependencyModel.2.0.4' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:43 ]    | Added package 'Microsoft.Extensions.DependencyInjection.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:43 ]    | Restoring NuGet package Microsoft.Extensions.FileProviders.Physical.5.0.0.
+[ 2026-09-11 19:25:44 ]    | Adding package 'Microsoft.Extensions.FileProviders.Abstractions.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:44 ]    | Added package 'Microsoft.Extensions.Configuration.Json.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:44 ]    | Restoring NuGet package Microsoft.Extensions.FileSystemGlobbing.5.0.0.
+[ 2026-09-11 19:25:44 ]    | Adding package 'Microsoft.Extensions.FileProviders.Physical.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:45 ]    | Adding package 'Microsoft.Extensions.FileSystemGlobbing.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:45 ]    | Added package 'Microsoft.Extensions.DependencyInjection.Abstractions.3.1.8' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:45 ]    | Restoring NuGet package Microsoft.Extensions.Hosting.Abstractions.3.1.8.
+[ 2026-09-11 19:25:45 ]    | Adding package 'Microsoft.Extensions.Hosting.Abstractions.3.1.8' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:45 ]    | Added package 'Microsoft.Extensions.FileProviders.Physical.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:46 ]    | Restoring NuGet package Microsoft.Extensions.Logging.2.2.0.
+[ 2026-09-11 19:25:46 ]    | Added package 'Microsoft.Extensions.FileProviders.Abstractions.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:46 ]    | Restoring NuGet package Microsoft.Extensions.Logging.Abstractions.3.1.8.
+[ 2026-09-11 19:25:46 ]    | Added package 'Microsoft.Extensions.FileSystemGlobbing.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:46 ]    | Restoring NuGet package Microsoft.Extensions.Options.2.2.0.
+[ 2026-09-11 19:25:47 ]    | Adding package 'Microsoft.Extensions.Logging.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:47 ]    | Added package 'Microsoft.CSharp.4.5.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:47 ]    | Adding package 'Microsoft.Extensions.Logging.Abstractions.3.1.8' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:47 ]    | Restoring NuGet package Microsoft.Extensions.Options.ConfigurationExtensions.2.0.0.
+[ 2026-09-11 19:25:48 ]    | Adding package 'Microsoft.Extensions.Options.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:48 ]    | Adding package 'Microsoft.Extensions.Options.ConfigurationExtensions.2.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:48 ]    | Added package 'Microsoft.Extensions.Hosting.Abstractions.3.1.8' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:48 ]    | Restoring NuGet package Microsoft.Extensions.Primitives.5.0.0.
+[ 2026-09-11 19:25:48 ]    | Added package 'Microsoft.Extensions.Logging.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:49 ]    | Restoring NuGet package NLog.1.0.0.505.
+[ 2026-09-11 19:25:49 ]    | Added package 'Microsoft.Extensions.Options.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:49 ]    | Restoring NuGet package Serilog.2.10.0.
+[ 2026-09-11 19:25:49 ]    | Added package 'Microsoft.Extensions.Logging.Abstractions.3.1.8' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:49 ]    | Restoring NuGet package Serilog.AspNetCore.4.1.0.
+[ 2026-09-11 19:25:50 ]    | Adding package 'Microsoft.Extensions.Primitives.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:50 ]    | Adding package 'NLog.1.0.0.505' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:50 ]    | Adding package 'Serilog.2.10.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:50 ]    | Adding package 'Serilog.AspNetCore.4.1.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:51 ]    | Added package 'NLog.1.0.0.505' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:51 ]    | Restoring NuGet package Serilog.Builder.1.2.0.
+[ 2026-09-11 19:25:51 ]    | Adding package 'Serilog.Builder.1.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:51 ]    | Added package 'Microsoft.Extensions.Primitives.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:51 ]    | Restoring NuGet package Serilog.Enrichers.AssemblyName.1.0.9.
+[ 2026-09-11 19:25:52 ]    | Added package 'Serilog.Builder.1.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:52 ]    | Restoring NuGet package Serilog.Enrichers.Context.4.2.0.
+[ 2026-09-11 19:25:52 ]    | Adding package 'Serilog.Enrichers.Context.4.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:52 ]    | Added package 'Serilog.2.10.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:52 ]    | Restoring NuGet package Serilog.Enrichers.Environment.2.2.0.
+[ 2026-09-11 19:25:53 ]    | Adding package 'Serilog.Enrichers.Environment.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:53 ]    | Adding package 'Serilog.Enrichers.AssemblyName.1.0.9' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:53 ]    | Added package 'Serilog.Enrichers.Context.4.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:53 ]    | Restoring NuGet package Serilog.Enrichers.Process.2.0.2.
+[ 2026-09-11 19:25:53 ]    | Adding package 'Serilog.Enrichers.Process.2.0.2' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:54 ]    | Added package 'Serilog.Enrichers.AssemblyName.1.0.9' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:54 ]    | Restoring NuGet package Serilog.Enrichers.Thread.3.1.0.
+[ 2026-09-11 19:25:54 ]    | Adding package 'Serilog.Enrichers.Thread.3.1.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:54 ]    | Added package 'Serilog.Enrichers.Thread.3.1.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:55 ]    | Restoring NuGet package Serilog.Extensions.Hosting.4.1.2.
+[ 2026-09-11 19:25:55 ]    | Adding package 'Serilog.Extensions.Hosting.4.1.2' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:55 ]    | Added package 'Serilog.Extensions.Hosting.4.1.2' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:55 ]    | Restoring NuGet package Serilog.Extensions.Logging.3.0.1.
+[ 2026-09-11 19:25:55 ]    | Adding package 'Serilog.Extensions.Logging.3.0.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:56 ]    | Added package 'Serilog.Extensions.Logging.3.0.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:56 ]    | Restoring NuGet package Serilog.Formatting.Compact.1.1.0.
+[ 2026-09-11 19:25:56 ]    | Adding package 'Serilog.Formatting.Compact.1.1.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:56 ]    | Added package 'Microsoft.Extensions.Options.ConfigurationExtensions.2.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:56 ]    | Restoring NuGet package Serilog.Settings.Configuration.3.1.0.
+[ 2026-09-11 19:25:57 ]    | Added package 'Microsoft.DotNet.PlatformAbstractions.2.0.4' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:57 ]    | Restoring NuGet package Serilog.Sinks.Console.3.1.1.
+[ 2026-09-11 19:25:57 ]    | Adding package 'Serilog.Settings.Configuration.3.1.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:57 ]    | Added package 'Microsoft.Extensions.DependencyModel.2.0.4' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:57 ]    | Restoring NuGet package Serilog.Sinks.Debug.2.0.0.
+[ 2026-09-11 19:25:58 ]    | Added package 'Serilog.Formatting.Compact.1.1.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:58 ]    | Restoring NuGet package Serilog.Sinks.File.4.1.0.
+[ 2026-09-11 19:25:58 ]    | Adding package 'Serilog.Sinks.Debug.2.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:58 ]    | Adding package 'Serilog.Sinks.File.4.1.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:59 ]    | Adding package 'Serilog.Sinks.Console.3.1.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:59 ]    | Added package 'Serilog.Sinks.File.4.1.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:59 ]    | Restoring NuGet package Serilog.Sinks.NewRelic.Logs.1.0.1.
+[ 2026-09-11 19:25:59 ]    | Adding package 'Serilog.Sinks.NewRelic.Logs.1.0.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:25:59 ]    | Added package 'Serilog.Sinks.Debug.2.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:00 ]    | Restoring NuGet package Serilog.Sinks.PeriodicBatching.2.3.0.
+[ 2026-09-11 19:26:00 ]    | Added package 'Serilog.Settings.Configuration.3.1.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:00 ]    | Adding package 'Serilog.Sinks.PeriodicBatching.2.3.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:00 ]    | Restoring NuGet package Serilog.Sinks.Seq.5.0.1.
+[ 2026-09-11 19:26:00 ]    | Added package 'Serilog.Sinks.Console.3.1.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:01 ]    | Restoring NuGet package Serilog.Sinks.Splunk.2.5.0.
+[ 2026-09-11 19:26:01 ]    | Adding package 'Serilog.Sinks.Seq.5.0.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:01 ]    | Adding package 'Serilog.Sinks.Splunk.2.5.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:01 ]    | Added package 'Serilog.Sinks.NewRelic.Logs.1.0.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:02 ]    | Restoring NuGet package Serilog.Sinks.Splunk.CustomFormatter.1.0.8.
+[ 2026-09-11 19:26:02 ]    | Adding package 'Serilog.Sinks.Splunk.CustomFormatter.1.0.8' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:02 ]    | Added package 'Serilog.Sinks.Splunk.2.5.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:02 ]    | Restoring NuGet package Splunk.Logging.Common.1.6.0.
+[ 2026-09-11 19:26:02 ]    | Added package 'Serilog.Sinks.PeriodicBatching.2.3.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:03 ]    | Restoring NuGet package System.Buffers.4.5.1.
+[ 2026-09-11 19:26:03 ]    |   GET https://api.nuget.org/v3-flatcontainer/splunk.logging.common/1.6.0/splunk.logging.common.1.6.0.nupkg
+[ 2026-09-11 19:26:03 ]    | Adding package 'System.Buffers.4.5.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:03 ]    | Added package 'Serilog.Sinks.Splunk.CustomFormatter.1.0.8' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:03 ]    | Restoring NuGet package System.ComponentModel.Annotations.4.5.0.
+[ 2026-09-11 19:26:04 ]    | Adding package 'System.ComponentModel.Annotations.4.5.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:04 ]    | Added package 'Serilog.Enrichers.Process.2.0.2' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:04 ]    | Restoring NuGet package System.Configuration.ConfigurationManager.4.7.0.
+[ 2026-09-11 19:26:04 ]    | Added package 'Serilog.AspNetCore.4.1.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:05 ]    | Adding package 'System.Configuration.ConfigurationManager.4.7.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:05 ]    | Restoring NuGet package System.IO.4.3.0.
+[ 2026-09-11 19:26:05 ]    | Adding package 'System.IO.4.3.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:05 ]    | Installed NLog 4.7.5 from https://api.nuget.org/v3/index.json to C:\Users\alexk\.nuget\packages\nlog\4.7.5 with content hash 1Udzim+UwoAGk0vW6T2rEBXJq1COvqTuE+4NFj2zHytuX1WOu+1Yes1qABG1IJOA5V3OMilIufUU1Ha9T0rrzQ==.
+[ 2026-09-11 19:26:05 ]    | Adding package 'NLog.4.7.5' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:06 ]    | Added package 'System.Buffers.4.5.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:06 ]    | Restoring NuGet package System.Memory.4.5.4.
+[ 2026-09-11 19:26:06 ]    | Adding package 'System.Memory.4.5.4' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:06 ]    | Added package 'System.Configuration.ConfigurationManager.4.7.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:06 ]    | Restoring NuGet package System.Numerics.Vectors.4.5.0.
+[ 2026-09-11 19:26:07 ]    | Adding package 'System.Numerics.Vectors.4.5.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:07 ]    |   OK https://api.nuget.org/v3-flatcontainer/splunk.logging.common/1.6.0/splunk.logging.common.1.6.0.nupkg 206ms
+[ 2026-09-11 19:26:07 ]    | Added package 'Serilog.Enrichers.Environment.2.2.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:07 ]    | Added package 'System.Memory.4.5.4' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:07 ]    | Restoring NuGet package System.Runtime.4.3.0.
+[ 2026-09-11 19:26:08 ]    | Restoring NuGet package System.Runtime.CompilerServices.Unsafe.5.0.0.
+[ 2026-09-11 19:26:08 ]    | Adding package 'System.Runtime.CompilerServices.Unsafe.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:08 ]    | Adding package 'System.Runtime.4.3.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:08 ]    | Added package 'System.Runtime.CompilerServices.Unsafe.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:09 ]    | Restoring NuGet package System.Security.AccessControl.4.7.0.
+[ 2026-09-11 19:26:09 ]    | Adding package 'System.Security.AccessControl.4.7.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:09 ]    | Added package 'Serilog.Sinks.Seq.5.0.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:09 ]    | Restoring NuGet package System.Security.Cryptography.Algorithms.4.3.1.
+[ 2026-09-11 19:26:09 ]    | Adding package 'System.Security.Cryptography.Algorithms.4.3.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:10 ]    | Added package 'System.ComponentModel.Annotations.4.5.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:10 ]    | Restoring NuGet package System.Security.Cryptography.Encoding.4.3.0.
+[ 2026-09-11 19:26:10 ]    | Installed Splunk.Logging.Common 1.6.0 from https://api.nuget.org/v3/index.json to C:\Users\alexk\.nuget\packages\splunk.logging.common\1.6.0 with content hash 75pMNuWiKTBgXllenftn59tLduGo3vVAERsTuURp4quaArDIZaZ0JxwtnJH84Du74r/V+rLK4hfk3NlqUsVeEg==.
+[ 2026-09-11 19:26:10 ]    | Adding package 'Splunk.Logging.Common.1.6.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:10 ]    | Adding package 'System.Security.Cryptography.Encoding.4.3.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:11 ]    | Added package 'System.Numerics.Vectors.4.5.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:11 ]    | Restoring NuGet package System.Security.Cryptography.Primitives.4.3.0.
+[ 2026-09-11 19:26:11 ]    | Added package 'System.IO.4.3.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:11 ]    | Restoring NuGet package System.Security.Permissions.4.7.0.
+[ 2026-09-11 19:26:11 ]    | Added package 'System.Security.AccessControl.4.7.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:12 ]    | Restoring NuGet package System.Security.Principal.Windows.4.7.0.
+[ 2026-09-11 19:26:12 ]    | Adding package 'System.Security.Principal.Windows.4.7.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:12 ]    | Added package 'System.Security.Cryptography.Algorithms.4.3.1' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:12 ]    | Restoring NuGet package System.Text.Encodings.Web.5.0.0.
+[ 2026-09-11 19:26:13 ]    |   GET https://api.nuget.org/v3-flatcontainer/system.text.encodings.web/5.0.0/system.text.encodings.web.5.0.0.nupkg
+[ 2026-09-11 19:26:13 ]    | Added package 'Splunk.Logging.Common.1.6.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:13 ]    | Restoring NuGet package System.Text.Json.5.0.0.
+[ 2026-09-11 19:26:13 ]    |   OK https://api.nuget.org/v3-flatcontainer/system.text.encodings.web/5.0.0/system.text.encodings.web.5.0.0.nupkg 196ms
+[ 2026-09-11 19:26:13 ]    | Adding package 'System.Security.Permissions.4.7.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:14 ]    |   GET https://api.nuget.org/v3-flatcontainer/system.text.json/5.0.0/system.text.json.5.0.0.nupkg
+[ 2026-09-11 19:26:14 ]    | Adding package 'System.Security.Cryptography.Primitives.4.3.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:14 ]    | Added package 'NLog.4.7.5' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:14 ]    | Restoring NuGet package System.Threading.Tasks.Extensions.4.5.4.
+[ 2026-09-11 19:26:14 ]    | Adding package 'System.Threading.Tasks.Extensions.4.5.4' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:15 ]    | Added package 'System.Security.Cryptography.Encoding.4.3.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:15 ]    | Restoring NuGet package System.ValueTuple.4.5.0.
+[ 2026-09-11 19:26:15 ]    | Adding package 'System.ValueTuple.4.5.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:15 ]    |   OK https://api.nuget.org/v3-flatcontainer/system.text.json/5.0.0/system.text.json.5.0.0.nupkg 216ms
+[ 2026-09-11 19:26:15 ]    | Added package 'System.Threading.Tasks.Extensions.4.5.4' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:16 ]    | Added package 'System.Security.Cryptography.Primitives.4.3.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:16 ]    | Added package 'System.Security.Principal.Windows.4.7.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:16 ]    | Added package 'System.Security.Permissions.4.7.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:16 ]    | Added package 'System.ValueTuple.4.5.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:17 ]    | Installed System.Text.Encodings.Web 5.0.0 from https://api.nuget.org/v3/index.json to C:\Users\alexk\.nuget\packages\system.text.encodings.web\5.0.0 with content hash EEslUvHKll1ftizbn20mX3Ix/l4Ygk/bdJ2LY6/X6FlGaP0RIhKMo9nS6JIGnKKT6KBP2PGj6JC3B9/ZF6ErqQ==.
+[ 2026-09-11 19:26:17 ]    | Adding package 'System.Text.Encodings.Web.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:17 ]    | Installed System.Text.Json 5.0.0 from https://api.nuget.org/v3/index.json to C:\Users\alexk\.nuget\packages\system.text.json\5.0.0 with content hash +luxMQNZ2WqeffBU7Ml6njIvxc8169NW2oU+ygNudXQGZiarjE7DOtN7bILiQjTZjkmwwRZGTtLzmdrSI/Ustw==.
+[ 2026-09-11 19:26:17 ]    | Added package 'System.Runtime.4.3.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:17 ]    | Adding package 'System.Text.Json.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:18 ]    | Added package 'System.Text.Encodings.Web.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:18 ]    | Added package 'System.Text.Json.5.0.0' to folder 'C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\packages'
+[ 2026-09-11 19:26:18 ]    |   CACHE https://api.nuget.org/v3/vulnerabilities/index.json
+[ 2026-09-11 19:26:18 ]    |   CACHE https://api.nuget.org/v3-vulnerabilities/2026.09.09.23.26.42/vulnerability.base.json
+[ 2026-09-11 19:26:18 ]    |   CACHE https://api.nuget.org/v3-vulnerabilities/2026.09.09.23.26.42/2026.09.11.11.26.50/vulnerability.update.json
+[ 2026-09-11 19:26:19 ]    | WARNING: NU1903: Package 'SSH.NET' 2024.1.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-q939-rpr3-3284
+[ 2026-09-11 19:26:19 ]    | WARNING: NU1904: Package 'System.Text.Encodings.Web' 5.0.0 has a known critical severity vulnerability, https://github.com/advisories/GHSA-ghhp-997w-qr28
+[ 2026-09-11 19:26:19 ]    | Restoring packages for C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\ManagementStockClientCP\ManagementStockClientCP.csproj...
+[ 2026-09-11 19:26:19 ]    | Restoring packages for C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Repositories\Nofshonit.Repositories.csproj...
+[ 2026-09-11 19:26:19 ]    | Restoring packages for C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Common\Nofshonit.Common.csproj...
+[ 2026-09-11 19:26:20 ]    | Restoring packages for C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.BL\Nofshonit.BL.csproj...
+[ 2026-09-11 19:26:20 ]    | Restoring packages for C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Infrastructure\Nofshonit.Infrastructure.csproj...
+[ 2026-09-11 19:26:20 ]    | Restoring packages for C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Services\Nofshonit.Services.csproj...
+[ 2026-09-11 19:26:20 ]    | Restoring packages for C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\TicketsHubRepository\TicketsHubRepository.csproj...
+[ 2026-09-11 19:26:21 ]    | Restoring packages for C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Api\Nofshonit.Api.csproj...
+[ 2026-09-11 19:26:21 ]    |   CACHE https://api.nuget.org/v3-flatcontainer/nlog/index.json
+[ 2026-09-11 19:26:21 ]    |   CACHE https://api.nuget.org/v3-flatcontainer/system.servicemodel.duplex/index.json
+[ 2026-09-11 19:26:21 ]    |   CACHE https://api.nuget.org/v3-flatcontainer/system.servicemodel.federation/index.json
+[ 2026-09-11 19:26:21 ]    |   CACHE https://api.nuget.org/v3-flatcontainer/system.servicemodel.http/index.json
+[ 2026-09-11 19:26:22 ]    |   CACHE https://api.nuget.org/v3-flatcontainer/system.servicemodel.nettcp/index.json
+[ 2026-09-11 19:26:22 ]    |   CACHE https://api.nuget.org/v3-flatcontainer/system.servicemodel.security/index.json
+[ 2026-09-11 19:26:22 ]    |   CACHE https://api.nuget.org/v3/vulnerabilities/index.json
+[ 2026-09-11 19:26:22 ]    |   CACHE https://api.nuget.org/v3-vulnerabilities/2026.09.09.23.26.42/vulnerability.base.json
+[ 2026-09-11 19:26:22 ]    |   CACHE https://api.nuget.org/v3-vulnerabilities/2026.09.09.23.26.42/2026.09.11.11.26.50/vulnerability.update.json
+[ 2026-09-11 19:26:23 ]    | WARNING: NU1903: Package 'SSH.NET' 2024.1.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-q939-rpr3-3284
+[ 2026-09-11 19:26:23 ]    | WARNING: NU1903: Package 'AutoMapper' 13.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x
+[ 2026-09-11 19:26:23 ]    | WARNING: NU1903: Package 'AutoMapper' 13.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x
+[ 2026-09-11 19:26:23 ]    | WARNING: NU1903: Package 'AutoMapper' 13.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x
+[ 2026-09-11 19:26:23 ]    | WARNING: NU1903: Package 'AutoMapper' 13.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x
+[ 2026-09-11 19:26:24 ]    | WARNING: NU1904: Package 'Microsoft.AspNetCore.Server.Kestrel.Core' 2.1.25 has a known critical severity vulnerability, https://github.com/advisories/GHSA-5rrx-jjjq-q2r5
+[ 2026-09-11 19:26:24 ]    | WARNING: NU1903: Package 'SSH.NET' 2024.1.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-q939-rpr3-3284
+[ 2026-09-11 19:26:24 ]    | WARNING: NU1904: Package 'Microsoft.AspNetCore.Server.Kestrel.Core' 2.1.25 has a known critical severity vulnerability, https://github.com/advisories/GHSA-5rrx-jjjq-q2r5
+[ 2026-09-11 19:26:24 ]    | WARNING: NU1903: Package 'SSH.NET' 2024.1.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-q939-rpr3-3284
+[ 2026-09-11 19:26:25 ]    | WARNING: NU1903: Package 'AutoMapper' 13.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x
+[ 2026-09-11 19:26:25 ]    | WARNING: NU1903: Package 'AutoMapper' 13.0.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x
+[ 2026-09-11 19:26:25 ]    | WARNING: NU1904: Package 'Microsoft.AspNetCore.Server.Kestrel.Core' 2.1.25 has a known critical severity vulnerability, https://github.com/advisories/GHSA-5rrx-jjjq-q2r5
+[ 2026-09-11 19:26:25 ]    | WARNING: NU1701: Package 'DtsLoggger 2.0.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework '.NETStandard,Version=v2.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:25 ]    | WARNING: NU1701: Package 'DtsLoggger 2.0.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:26 ]    | WARNING: NU1701: Package 'DtsLoggger 2.0.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:26 ]    | WARNING: NU1701: Package 'DtsLoggger 2.0.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:26 ]    | WARNING: NU1701: Package 'DtsLoggger 2.0.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:26 ]    | WARNING: NU1701: Package 'DtsLoggger 2.0.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:26 ]    | WARNING: NU1701: Package 'DtsLoggger 2.0.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:27 ]    | WARNING: NU1701: Package 'DtsLoggger 2.0.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:27 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:27 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:27 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:28 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.WebHost 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:28 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.WebHost 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:28 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.WebHost 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:28 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:28 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.WebHost 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:29 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:29 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.WebHost 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:29 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:29 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.WebHost 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:29 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:30 ]    | WARNING: NU1701: Package 'Microsoft.AspNet.WebApi.WebHost 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:30 ]    | WARNING: NU1701: Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:30 ]    | WARNING: NU1701: Package 'Swashbuckle.Core 5.6.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:30 ]    | WARNING: NU1701: Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:30 ]    | WARNING: NU1701: Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:31 ]    | WARNING: NU1701: Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:31 ]    | WARNING: NU1701: Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:31 ]    | WARNING: NU1701: Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:31 ]    | WARNING: NU1701: Package 'PaymentsCommon 3.1.8' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:32 ]    | WARNING: NU1701: Package 'Swashbuckle.Core 5.6.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:32 ]    | WARNING: NU1701: Package 'PaymentsCommon 3.1.8' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:32 ]    | WARNING: NU1701: Package 'PurchaseHandler 3.0.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:32 ]    | WARNING: NU1701: Package 'PurchaseHandler 3.0.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:32 ]    | WARNING: NU1701: Package 'PaymentsCommon 3.1.8' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:33 ]    | WARNING: NU1701: Package 'PaymentsCommon 3.1.8' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:33 ]    | WARNING: NU1701: Package 'PurchaseHandler 3.0.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:33 ]    | WARNING: NU1701: Package 'PurchaseHandler 3.0.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:33 ]    | WARNING: NU1701: Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:33 ]    | WARNING: NU1701: Package 'PaymentsCommon 3.1.8' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:34 ]    | WARNING: NU1701: Package 'PurchaseHandler 3.0.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:34 ]    | WARNING: NU1701: Package 'SendSmsClient 1.1.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:34 ]    | WARNING: NU1701: Package 'Swashbuckle.Core 5.6.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:34 ]    | WARNING: NU1701: Package 'SendSmsClient 1.1.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:35 ]    | WARNING: NU1701: Package 'SendSmsClient 1.1.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:35 ]    | WARNING: NU1701: Package 'Swashbuckle.Core 5.6.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:35 ]    | WARNING: NU1701: Package 'SendSmsClient 1.1.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:35 ]    | WARNING: NU1701: Package 'SendSmsClient 1.1.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:35 ]    | WARNING: NU1701: Package 'Swashbuckle.Core 5.6.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:36 ]    | WARNING: NU1701: Package 'Swashbuckle.Core 5.6.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:36 ]    | WARNING: NU1701: Package 'Swashbuckle.Core 5.6.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:36 ]    | WARNING: NU1701: Package 'WebActivatorEx 2.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:36 ]    | WARNING: NU1701: Package 'WebActivatorEx 2.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:36 ]    | WARNING: NU1701: Package 'WebActivatorEx 2.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:37 ]    | WARNING: NU1701: Package 'WebActivatorEx 2.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:37 ]    | WARNING: NU1701: Package 'WebActivatorEx 2.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:37 ]    | WARNING: NU1701: Package 'WebActivatorEx 2.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:37 ]    | WARNING: NU1701: Package 'WebActivatorEx 2.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.
+[ 2026-09-11 19:26:38 ]    | Generating MSBuild file C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\ManagementStockClientCP\obj\ManagementStockClientCP.csproj.nuget.g.props.
+[ 2026-09-11 19:26:38 ]    | Generating MSBuild file C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Infrastructure\obj\Nofshonit.Infrastructure.csproj.nuget.g.props.
+[ 2026-09-11 19:26:38 ]    | Generating MSBuild file C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Api\obj\Nofshonit.Api.csproj.nuget.g.props.
+[ 2026-09-11 19:26:38 ]    | Generating MSBuild file C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Common\obj\Nofshonit.Common.csproj.nuget.g.props.
+[ 2026-09-11 19:26:38 ]    | Generating MSBuild file C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Repositories\obj\Nofshonit.Repositories.csproj.nuget.g.props.
+[ 2026-09-11 19:26:39 ]    | Generating MSBuild file C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\TicketsHubRepository\obj\TicketsHubRepository.csproj.nuget.g.props.
+[ 2026-09-11 19:26:39 ]    | Generating MSBuild file C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.BL\obj\Nofshonit.BL.csproj.nuget.g.props.
+[ 2026-09-11 19:26:39 ]    | Generating MSBuild file C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Services\obj\Nofshonit.Services.csproj.nuget.g.props.
+[ 2026-09-11 19:26:39 ]    | Writing assets file to disk. Path: C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Infrastructure\obj\project.assets.json
+[ 2026-09-11 19:26:39 ]    | Writing assets file to disk. Path: C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Common\obj\project.assets.json
+[ 2026-09-11 19:26:40 ]    | Writing assets file to disk. Path: C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\ManagementStockClientCP\obj\project.assets.json
+[ 2026-09-11 19:26:40 ]    | Writing assets file to disk. Path: C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\TicketsHubRepository\obj\project.assets.json
+[ 2026-09-11 19:26:40 ]    | Writing assets file to disk. Path: C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.BL\obj\project.assets.json
+[ 2026-09-11 19:26:40 ]    | Writing assets file to disk. Path: C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Repositories\obj\project.assets.json
+[ 2026-09-11 19:26:40 ]    | Writing assets file to disk. Path: C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Services\obj\project.assets.json
+[ 2026-09-11 19:26:41 ]    | Writing assets file to disk. Path: C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Api\obj\project.assets.json
+[ 2026-09-11 19:26:41 ]    | Restored C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Infrastructure\Nofshonit.Infrastructure.csproj (in 1.53 sec).
+[ 2026-09-11 19:26:41 ]    | Restored C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\ManagementStockClientCP\ManagementStockClientCP.csproj (in 1.52 sec).
+[ 2026-09-11 19:26:41 ]    | Restored C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\TicketsHubRepository\TicketsHubRepository.csproj (in 1.53 sec).
+[ 2026-09-11 19:26:42 ]    | Restored C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Repositories\Nofshonit.Repositories.csproj (in 1.53 sec).
+[ 2026-09-11 19:26:42 ]    | Restored C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.BL\Nofshonit.BL.csproj (in 1.53 sec).
+[ 2026-09-11 19:26:42 ]    | Restored C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Api\Nofshonit.Api.csproj (in 1.53 sec).
+[ 2026-09-11 19:26:42 ]    | Restored C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Services\Nofshonit.Services.csproj (in 1.53 sec).
+[ 2026-09-11 19:26:42 ]    | Restored C:\Users\alexk\Desktop\Automation\BitBuketProject\behatzdaa_backend\Nofshonit.Common\Nofshonit.Common.csproj (in 1.53 sec).
+[ 2026-09-11 19:26:43 ]    | 
+[ 2026-09-11 19:26:43 ]    | NuGet Config files used:
+[ 2026-09-11 19:26:43 ]    |     C:\Users\alexk\AppData\Roaming\NuGet\NuGet.Config
+[ 2026-09-11 19:26:43 ]    |     C:\Program Files (x86)\NuGet\Config\Microsoft.VisualStudio.FallbackLocation.config
+[ 2026-09-11 19:26:43 ]    |     C:\Program Files (x86)\NuGet\Config\Microsoft.VisualStudio.Offline.config
+[ 2026-09-11 19:26:44 ]    | 
+[ 2026-09-11 19:26:44 ]    | Feeds used:
+[ 2026-09-11 19:26:44 ]    |     C:\Users\alexk\.nuget\packages\
+[ 2026-09-11 19:26:44 ]    |     https://api.nuget.org/v3/index.json
+[ 2026-09-11 19:26:44 ]    |     N:\DtsLocalNuget
+[ 2026-09-11 19:26:45 ]    |     C:\Program Files (x86)\Microsoft SDKs\NuGetPackages\
+[ 2026-09-11 19:26:45 ]    | 
+[ 2026-09-11 19:26:45 ]    | Installed:
+[ 2026-09-11 19:26:45 ]    |     74 package(s) to packages.config projects
+[ 2026-09-11 19:26:46 ]    ✓ Legacy NuGet packages restored
+[ 2026-09-11 19:26:46 ] 
+[ 2026-09-11 19:26:46 ] 📦 Publishing Beyahad_Backend: Nofshonit.Api.csproj...

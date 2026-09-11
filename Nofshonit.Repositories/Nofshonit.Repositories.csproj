@@ -55,7 +55,7 @@
     <PackageReference Include="System.Text.Json" Version="9.0.1" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(SolutionDir)' != '' AND '$(SolutionDir)' != '*Undefined*'">
     <Exec Command="xcopy &quot;$(ProjectDir)bin\Debug\netcoreapp2.2\Nofshonit.Repositories.dll&quot; &quot;$(SolutionDir)Nofshonit.Api\bin\Debug\netcoreapp2.2&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\Debug\netcoreapp2.2\Nofshonit.Repositories.pdb&quot; &quot;$(SolutionDir)Nofshonit.Api\bin\Debug\netcoreapp2.2&quot; /Y" />
   </Target>
 </Project>

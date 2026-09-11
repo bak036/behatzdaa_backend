@@ -86,7 +86,7 @@
   <ItemGroup>
     <Folder Include="Connected Services\LeumiCardSvc\" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(SolutionDir)' != '' AND '$(SolutionDir)' != '*Undefined*'">
     <Exec Command="xcopy &quot;$(ProjectDir)bin\Debug\netcoreapp2.2\Nofshonit.BL.dll&quot; &quot;$(SolutionDir)Nofshonit.Api\bin\Debug\netcoreapp2.2&quot; /Y&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\Debug\netcoreapp2.2\Nofshonit.BL.pdb&quot; &quot;$(SolutionDir)Nofshonit.Api\bin\Debug\netcoreapp2.2&quot; /Y" />
   </Target>
 </Project>
