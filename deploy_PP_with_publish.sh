@@ -64,6 +64,34 @@ WINSCP=$(find_winscp) || {
 }
 
 # ============================================================
+# Robust nuget.exe detection — several legacy projects in this
+# solution (OrderDll, Nofshonit.Logs) are non-SDK-style .csproj files
+# using packages.config with <Reference HintPath="..\packages\...">.
+# "dotnet build"/"dotnet publish" never restores packages.config —
+# only the classic NuGet client does — so without this the build fails
+# with CS0246 (missing types like DtsLoggger/Serilog) or the
+# "missing ...\build\EntityFramework.props" restore error, regardless
+# of which machine or shell runs this script. If nuget.exe isn't on
+# PATH, download the official CLI once into a local tools folder so
+# this "just works" without manual setup on any machine.
+# ============================================================
+find_nuget() {
+    local candidates=(
+        "nuget.exe"
+        "nuget"
+        "$ROOT/.nuget-tools/nuget.exe"
+    )
+    local c
+    for c in "${candidates[@]}"; do
+        if command -v "$c" >/dev/null 2>&1 || [[ -f "$c" ]]; then
+            echo "$c"
+            return 0
+        fi
+    done
+    return 1
+}
+
+# ============================================================
 # Defensive step: shut down WSL if it's running, before it can
 # interfere. An active WSL VM brings up a Hyper-V virtual network
 # adapter (vEthernet (WSL)) that can disrupt UDP-broadcast-based
@@ -165,7 +193,7 @@ log "==================================================="
 # STEP 1: Check and install PowerShell prerequisites
 # ============================================================
 log ""
-log "📦 [STEP 1/4] Checking PowerShell prerequisites..."
+log "📦 [STEP 1/5] Checking PowerShell prerequisites..."
 
 PREREQ_RESULT=$("$POWERSHELL" -NoProfile -Command '
 $ErrorActionPreference = "Stop"
@@ -232,7 +260,7 @@ fi
 # STEP 2: Check and install jq
 # ============================================================
 log ""
-log "📦 [STEP 2/4] Checking jq..."
+log "📦 [STEP 2/5] Checking jq..."
 if ! command -v jq &> /dev/null; then
     log "   ⚙  jq not found. Installing..."
     if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
@@ -254,7 +282,7 @@ fi
 # STEP 3: Check and install SqlServer module
 # ============================================================
 log ""
-log "📦 [STEP 3/4] Checking SQL Server PowerShell module..."
+log "📦 [STEP 3/5] Checking SQL Server PowerShell module..."
 
 SQL_MODULE_RESULT=$("$POWERSHELL" -NoProfile -Command '
 $ErrorActionPreference = "Stop"
@@ -312,7 +340,7 @@ fi
 # STEP 4: Check Robocopy
 # ============================================================
 log ""
-log "📦 [STEP 4/4] Checking Robocopy..."
+log "📦 [STEP 4/5] Checking Robocopy..."
 ROBOCOPY_CHECK=$("$POWERSHELL" -NoProfile -Command "
     if (Get-Command robocopy -ErrorAction SilentlyContinue) {
         Write-Output 'FOUND'
@@ -327,6 +355,29 @@ else
     log "   ❌ ERROR: Robocopy not found"
     log "   Robocopy should be available on all Windows systems"
     exit 1
+fi
+
+# ============================================================
+# STEP 5: Check and install nuget.exe (classic CLI, for
+# packages.config restore — see find_nuget() comment above)
+# ============================================================
+log ""
+log "📦 [STEP 5/5] Checking nuget.exe..."
+NUGET=$(find_nuget) || NUGET=""
+
+if [[ -z "$NUGET" ]]; then
+    log "   ⚙  nuget.exe not found. Downloading official CLI..."
+    mkdir -p "$ROOT/.nuget-tools"
+    if curl -L "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -o "$ROOT/.nuget-tools/nuget.exe" 2>/dev/null; then
+        NUGET="$ROOT/.nuget-tools/nuget.exe"
+        log "   ✓ nuget.exe downloaded to $ROOT/.nuget-tools/nuget.exe"
+    else
+        log "❌ ERROR: nuget.exe not found and download failed"
+        log "   Install it manually from https://www.nuget.org/downloads or add it to PATH"
+        exit 1
+    fi
+else
+    log "   ✓ nuget.exe is ready ($NUGET)"
 fi
 
 log ""
@@ -518,6 +569,43 @@ if [[ "$PUBLISH_RESULT" != *"SUCCESS"* ]]; then
     exit 1
 fi
 
+log ""
+
+# ==================================================
+# STEP 0B: RESTORE LEGACY NUGET PACKAGES (packages.config)
+# ==================================================
+# OrderDll and Nofshonit.Logs (and their siblings pulled in via
+# ProjectReference from Nofshonit.Api) are old-style .csproj projects
+# using packages.config, not PackageReference. "dotnet publish" never
+# restores those — it silently leaves ..\packages\ empty/incomplete,
+# which then fails the build with either a missing
+# "...\build\EntityFramework.props" error (OrderDll) or CS0246 errors
+# for types like DtsLoggger/Serilog (Nofshonit.Logs) because their
+# HintPath-referenced DLLs were never downloaded. A classic
+# "nuget restore" against the solution populates ..\packages\ for
+# every packages.config project up front, so this always runs before
+# "dotnet publish" regardless of which projects happen to need it.
+log "==================================================="
+log "📥 RESTORING LEGACY NUGET PACKAGES (packages.config)"
+log "==================================================="
+
+SLN_FILE=$(find "$ROOT" -maxdepth 1 -name "*.sln" | head -1)
+if [[ -z "$SLN_FILE" ]]; then
+    log "❌ ERROR: No .sln file found in $ROOT — cannot restore packages.config projects"
+    exit 1
+fi
+
+log "   Restoring packages for $(basename "$SLN_FILE")..."
+NUGET_RESTORE_OUTPUT=$("$NUGET" restore "$SLN_FILE" -NonInteractive 2>&1) || NUGET_RESTORE_EXIT=$? 
+NUGET_RESTORE_EXIT="${NUGET_RESTORE_EXIT:-0}"
+echo "$NUGET_RESTORE_OUTPUT" | while IFS= read -r line; do log "   | $line"; done
+
+if [[ "$NUGET_RESTORE_EXIT" -ne 0 ]]; then
+    log "❌ nuget restore failed (exit $NUGET_RESTORE_EXIT)"
+    exit 1
+fi
+
+log "   ✓ Legacy NuGet packages restored"
 log ""
 
 # ==================================================
