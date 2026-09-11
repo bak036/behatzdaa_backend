@@ -6,6 +6,30 @@
 set -e
 if (set -o pipefail >/dev/null 2>&1); then set -o pipefail; fi
 
+# Ensure Git Bash utilities (cygpath, etc.) are in PATH
+export PATH="/usr/bin:/usr/local/bin:$PATH"
+
+# cygpath fallback if still not found
+if ! command -v cygpath >/dev/null 2>&1; then
+    cygpath() {
+        local flag="" path=""
+        while [[ $# -gt 0 ]]; do
+            case "$1" in
+                -w) flag="w"; shift ;;
+                -m) flag="m"; shift ;;
+                -u) flag="u"; shift ;;
+                *)  path="$1"; shift ;;
+            esac
+        done
+        if [[ "$flag" == "w" || "$flag" == "m" ]]; then
+            # Handle both /c/... and /mnt/c/... (WSL-style) paths
+            echo "$path" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:\\|; s|^/\([a-zA-Z]\)/|\1:\\|; s|/|\\|g'
+        else
+            echo "$path"
+        fi
+    }
+fi
+
 # Dynamic PowerShell path detection
 if [[ "$SHELL" == *bash* ]]; then
   POWERSHELL="powershell.exe"
@@ -26,12 +50,73 @@ fi
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 cd "$ROOT"
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # ===== AUTO-DETECT PROJECT AND BRANCH =====
 PROJECT_NAME=$(basename "$ROOT")
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 LOG_FILE="$ROOT/automation_master_log.txt"
 VARS_FILE="$ROOT/config_variables.json"
+
+# ===== LOAD .ENV =====
+ENV_FILE="$SCRIPT_DIR/.env"
+if [[ ! -f "$ENV_FILE" ]]; then
+    echo "❌ ERROR: .env not found at $ENV_FILE"
+    exit 1
+fi
+set -a
+# shellcheck disable=SC1090
+source "$ENV_FILE"
+set +a
+
+: "${DB_SERVER:?Missing DB_SERVER in .env}"
+: "${DB_NAME:?Missing DB_NAME in .env}"
+: "${DB_USER:?Missing DB_USER in .env}"
+: "${DB_PASSWORD:?Missing DB_PASSWORD in .env}"
+: "${SFTP_HOST:?Missing SFTP_HOST in .env}"
+: "${SFTP_PORT:?Missing SFTP_PORT in .env}"
+: "${SFTP_USER:?Missing SFTP_USER in .env}"
+: "${SFTP_PASSWORD:?Missing SFTP_PASSWORD in .env}"
+SFTP_UPLOAD_DIR="${SFTP_UPLOAD_DIR:-/pp}"
+
+# ===== WINSCP =====
+find_winscp() {
+    local candidates=(
+        "winscp.com"
+        "/c/Program Files (x86)/WinSCP/WinSCP.com"
+        "/c/Program Files/WinSCP/WinSCP.com"
+        "/mnt/c/Program Files (x86)/WinSCP/WinSCP.com"
+        "/mnt/c/Program Files/WinSCP/WinSCP.com"
+    )
+    local c
+    for c in "${candidates[@]}"; do
+        if command -v "$c" >/dev/null 2>&1 || [[ -f "$c" ]]; then
+            echo "$c"; return 0
+        fi
+    done
+    return 1
+}
+
+WINSCP=$(find_winscp) || {
+    echo "❌ ERROR: WinSCP.com not found. Install WinSCP (winscp.net)."
+    exit 1
+}
+
+SFTP_TMP="$ROOT/.sftp_tmp_$$"
+mkdir -p "$SFTP_TMP"
+SFTP_TMP_WIN=$(echo "$SFTP_TMP" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:\\|; s|^/\([a-zA-Z]\)/|\1:\\|; s|/|\\|g')
+cleanup_sftp() { rm -rf "$SFTP_TMP" 2>/dev/null || true; }
+trap cleanup_sftp EXIT
+
+run_winscp() {
+    local script_file="$1"
+    local output_file="$2"
+    local script_win
+    # Use sed to convert path — cygpath may mishandle /mnt/c/ style paths
+    script_win=$(echo "$script_file" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:\\|; s|^/\([a-zA-Z]\)/|\1:\\|; s|/|\\|g')
+    MSYS_NO_PATHCONV=1 "$WINSCP" /ini=nul /script="$script_win" > "$output_file" 2>&1
+}
 
 # Logging helper
 log() {
@@ -313,17 +398,29 @@ RAW_FLAG="$FLAG_NAME"
 normalize_path() {
     local winpath="$1"
     local path="${winpath//\\//}"
-    if [[ "$MSYSTEM" == "MINGW64" || "$MSYSTEM" == "MINGW32" ]]; then
-        path=$(echo "$path" | sed -E 's#^([A-Za-z]):#/\L\1/#')
+    # Use $OSTYPE rather than $MSYSTEM — MSYSTEM isn't reliably exported
+    # when this script runs non-interactively (e.g. Task Scheduler), which
+    # was causing this branch to be skipped and producing a doubled slash
+    # like "C://Users/..." previously.
+    if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
+        # Git-Bash/MSYS style: C:/Users/... -> /c/Users/...
+        path=$(echo "$path" | sed -E 's#^([A-Za-z]):#/\L\1#')
+    elif grep -qi microsoft /proc/version 2>/dev/null; then
+        # WSL: $OSTYPE reports linux-gnu here (not msys), but the filesystem
+        # only exposes Windows drives under /mnt/<drive>, so a path like
+        # "C:/Users/..." can never resolve via test -d / cd — it needs to be
+        # "/mnt/c/Users/...". This is the branch that was silently wrong before.
+        path=$(echo "$path" | sed -E 's#^([A-Za-z]):#/mnt/\L\1#')
     else
-        path=$(echo "$path" | sed -E 's#^([A-Za-z]):#\1:/#')
+        # Only insert the ":/" if it isn't already there, so this is safe
+        # to call on a path that's already been through the conversion above.
+        path=$(echo "$path" | sed -E 's#^([A-Za-z]):([^/])#\1:/\2#')
     fi
     echo "$path"
 }
 
 REMOTE_SERVER=$(normalize_path "$REMOTE_SERVER")
 
-CONFIRM_DIR="//PP-SERVER/CiCd/RESULTS"
 
 log "==============================================================="
 log "== ♻️  ROLLBACK STARTED =="
@@ -331,149 +428,175 @@ log "==============================================================="
 log "Project:      $PROJECT"
 log "Branch:       $BRANCH"
 log "Flag:         $FLAG_NAME"
-log "Remote:       $REMOTE_SERVER"
-log "User:         $REMOTE_USER"
+log "SFTP:         $SFTP_HOST:$SFTP_PORT"
+log "SFTP folder:  $SFTP_UPLOAD_DIR"
 log "Deploy Root:  $DEPLOY_ROOT"
 log "==============================================================="
 
 # STEP 1: CREATE AND UPLOAD ROLLBACK FLAG
 log "🪶 [1/2] Creating rollback flag..."
 
-FLAG_PATH="./${RAW_FLAG}"
+FLAG_PATH="$SFTP_TMP/${RAW_FLAG}"
 echo "rollback triggered $(date)" > "$FLAG_PATH"
+FLAG_WIN=$(echo "$FLAG_PATH" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:\\|; s|^/\([a-zA-Z]\)/|\1:\\|; s|/|\\|g')
 log "   ✓ Flag created: $RAW_FLAG"
 
-ROLLBACK_START=$(date +%s)
+ROLLBACK_START_LOCAL=$("$POWERSHELL" -NoProfile -Command "(Get-Date).ToString('yyyy-MM-dd HH:mm:ss')" 2>/dev/null | tr -d '\r\n') || ROLLBACK_START_LOCAL=""
 
-log "📤 Uploading rollback flag to server..."
+log "📤 Uploading rollback flag → ${SFTP_UPLOAD_DIR}/${RAW_FLAG}"
 
-UPLOAD_RESULT=$("$POWERSHELL" -NoProfile -Command "
-try {
-    try { net use '$RAW_REMOTE' /delete /y 2>&1 | Out-Null } catch {}
-    
-    \$netUseResult = net use '$RAW_REMOTE' /user:'$REMOTE_USER' '$REMOTE_PASSWORD' /persistent:no 2>&1
-    if (\$LASTEXITCODE -ne 0) { throw \"Connection failed\" }
-    
-    \$destFile = \"$RAW_REMOTE\\$RAW_FLAG\"
-    Copy-Item -Path '$FLAG_PATH' -Destination \$destFile -Force -ErrorAction Stop
-    
-    net use '$RAW_REMOTE' /delete /y 2>&1 | Out-Null
-    Write-Output 'SUCCESS'
-} catch {
-    Write-Output \"FAILED: \$(\$_.Exception.Message)\"
-    try { net use '$RAW_REMOTE' /delete /y 2>&1 | Out-Null } catch {}
+PUT_SCRIPT="$SFTP_TMP/put_flag.txt"
+PUT_LOG="$SFTP_TMP/put_flag.log"
+cat > "$PUT_SCRIPT" <<EOF
+option batch abort
+option confirm off
+option transfer binary
+open sftp://${SFTP_HOST}:${SFTP_PORT}/ -username="${SFTP_USER}" -password="${SFTP_PASSWORD}" -hostkey="*"
+cd "${SFTP_UPLOAD_DIR}"
+put "${FLAG_WIN}" "${RAW_FLAG}"
+exit
+EOF
+
+run_winscp "$PUT_SCRIPT" "$PUT_LOG" && {
+    log "   ✓ Rollback flag uploaded successfully"
+} || {
+    log "❌ ERROR: Failed to upload rollback flag"
+    cat "$PUT_LOG" | while IFS= read -r l; do log "   $l"; done
     exit 1
 }
-" 2>&1)
-
-if [[ "$UPLOAD_RESULT" != *"SUCCESS"* ]]; then
-    log "❌ ERROR: Failed to upload rollback flag"
-    exit 1
-fi
-
-log "   ✓ Rollback flag uploaded successfully"
 
 # STEP 2: WAIT FOR WATCHER
-log "⏳ [2/2] Waiting for watcher confirmation..."
+log "⏳ [2/2] Waiting for watcher confirmation via SFTP ($SFTP_UPLOAD_DIR)..."
 
 WATCHER_CONFIRMED=false
-MAX_WAIT=120
-CHECK_INTERVAL=2
+WATCHER_RESULT_FILES=()
+MAX_WAIT=600
+CHECK_INTERVAL=4
 RESULT_FILE=""
 
+LOCAL_CONFIRM_DIR="$ROOT/.rollback_confirmations"
+mkdir -p "$LOCAL_CONFIRM_DIR"
+LOCAL_CONFIRM_WIN=$(echo "$LOCAL_CONFIRM_DIR" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:\\|; s|^/\([a-zA-Z]\)/|\1:\\|; s|/|\\|g')
+
+# ── Query expected server count from ProjectRules ────────────────────
+connStr="Server=${DB_SERVER};Database=${DB_NAME};User ID=${DB_USER};Password=${DB_PASSWORD};TrustServerCertificate=True;"
+SERVER_COUNT=$("$POWERSHELL" -NoProfile -Command "
+    try {
+        Import-Module SqlServer -ErrorAction Stop | Out-Null
+        \$r = Invoke-Sqlcmd -ConnectionString '$connStr' -Query \"SELECT COUNT(*) AS cnt FROM ProjectRules WHERE ProjectName='${PROJECT_NAME}' AND Branch='${BRANCH}' AND ServerName IS NOT NULL AND ServerName != ''\"
+        Write-Output \$r.cnt
+    } catch { Write-Output 1 }
+" 2>/dev/null | tr -d '\r\n') || SERVER_COUNT=1
+[[ "$SERVER_COUNT" =~ ^[0-9]+$ ]] || SERVER_COUNT=1
+[[ "$SERVER_COUNT" -eq 0 ]] && SERVER_COUNT=1
+
+log "   Expecting responses from $SERVER_COUNT server(s)..."
+
+declare -A SEEN_ROLLBACK_FILES
+
+set +e
 for ((i=1; i<=MAX_WAIT/CHECK_INTERVAL; i++)); do
     ELAPSED=$((i * CHECK_INTERVAL))
-    
-    RESULT=$("$POWERSHELL" -NoProfile -Command "
-        \$rollbackStart = (Get-Date '1970-01-01 00:00:00Z').AddSeconds($ROLLBACK_START)
-        if (Test-Path '$CONFIRM_DIR') {
-            \$file = Get-ChildItem '$CONFIRM_DIR' -Filter '*${PROJECT}*${BRANCH}*Rollback*Success*.txt' -ErrorAction SilentlyContinue |
-                Where-Object { \$_.LastWriteTime -gt \$rollbackStart } |
-                Select-Object -First 1
-            if (\$file) { Write-Output \$file.FullName }
-        }
-    " 2>/dev/null | tr -d '\r\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-    
-    if [[ -n "$RESULT" ]] && [[ "$RESULT" != "null" ]]; then
+
+    LIST_SCRIPT="$SFTP_TMP/list_results.txt"
+    LIST_LOG="$SFTP_TMP/list_results.log"
+
+    cat > "$LIST_SCRIPT" <<EOF
+option batch continue
+option confirm off
+open sftp://${SFTP_USER}:${SFTP_PASSWORD}@${SFTP_HOST}:${SFTP_PORT}/ -hostkey=*
+cd ${SFTP_UPLOAD_DIR}
+ls
+exit
+EOF
+    run_winscp "$LIST_SCRIPT" "$LIST_LOG" || true
+
+    while IFS= read -r line; do
+        FNAME=$(echo "$line" | grep -oE "${PROJECT_NAME}_${BRANCH}_Rollback_Success_[^ ]+" | head -1 | tr -d '\r') || true
+        [[ -z "$FNAME" ]] && continue
+        [[ -n "${SEEN_ROLLBACK_FILES[$FNAME]:-}" ]] && continue
+
+        GET_SCRIPT="$SFTP_TMP/get_result.txt"
+        GET_LOG="$SFTP_TMP/get_result.log"
+        cat > "$GET_SCRIPT" <<EOF
+option batch continue
+option confirm off
+open sftp://${SFTP_USER}:${SFTP_PASSWORD}@${SFTP_HOST}:${SFTP_PORT}/ -hostkey=*
+cd ${SFTP_UPLOAD_DIR}
+lcd ${LOCAL_CONFIRM_WIN}
+get "${FNAME}"
+rm "${FNAME}"
+exit
+EOF
+        run_winscp "$GET_SCRIPT" "$GET_LOG" || true
+
+        RESULT_LOCAL="$LOCAL_CONFIRM_DIR/$FNAME"
+        if [[ ! -f "$RESULT_LOCAL" ]]; then
+            log "[DEBUG] GET failed for $FNAME — LOCAL_CONFIRM_WIN=$LOCAL_CONFIRM_WIN"
+            cat "$GET_LOG" 2>/dev/null | tail -5 | while IFS= read -r l; do log "   GET: $l"; done
+            continue
+        fi
+
+        RESULT_BRANCH=$(grep -E 'Branch=' "$RESULT_LOCAL" | head -1 | cut -d'=' -f2- | tr -d '\r') || true
+        RESULT_STATUS=$(grep -E 'Status=' "$RESULT_LOCAL" | head -1 | cut -d'=' -f2- | tr -d '\r') || true
+        RESULT_TIME=$(grep   -E 'Time='   "$RESULT_LOCAL" | head -1 | cut -d'=' -f2- | tr -d '\r') || true
+
+        if [[ "$RESULT_BRANCH" != "$BRANCH" ]]; then continue; fi
+        if [[ "$RESULT_STATUS" != "Success" ]]; then continue; fi
+
+        if [[ -n "$RESULT_TIME" && -n "$ROLLBACK_START_LOCAL" ]]; then
+            RESULT_EPOCH=$("$POWERSHELL" -NoProfile -Command "try { [DateTimeOffset]::Parse('$RESULT_TIME').ToUnixTimeSeconds() } catch { 0 }" 2>/dev/null | tr -d '\r\n')
+            START_EPOCH=$("$POWERSHELL"  -NoProfile -Command "try { [DateTimeOffset]::Parse('$ROLLBACK_START_LOCAL').ToUnixTimeSeconds() } catch { 0 }" 2>/dev/null | tr -d '\r\n')
+            if [[ "$RESULT_EPOCH" =~ ^[0-9]+$ && "$START_EPOCH" =~ ^[0-9]+$ ]] && (( RESULT_EPOCH < START_EPOCH )); then
+                continue
+            fi
+        fi
+
+        SEEN_ROLLBACK_FILES[$FNAME]=1
+        WATCHER_RESULT_FILES+=("$RESULT_LOCAL")
+        R_SERVER=$(grep -E 'WatcherNode=' "$RESULT_LOCAL" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_SERVER="?"
+        log ""
+        log "   📥 Response from server: $R_SERVER → Status: $RESULT_STATUS"
+        cat "$RESULT_LOCAL" | while IFS= read -r rline; do log "      | $rline"; done
+
+    done < "$LIST_LOG"
+
+    RECEIVED=${#WATCHER_RESULT_FILES[@]}
+    if [[ $RECEIVED -ge $SERVER_COUNT ]]; then
         WATCHER_CONFIRMED=true
-        RESULT_FILE="$RESULT"
-        log "   ✓ Watcher confirmed after ${ELAPSED}s!"
-        log "   📄 Result file: $(basename "$RESULT")"
+        RESULT_FILE="${WATCHER_RESULT_FILES[0]}"
+        log "   ✅ All $SERVER_COUNT server(s) confirmed after ${ELAPSED}s!"
         break
     fi
-    
-    [[ $ELAPSED -eq 30 ]] && log "   ... waiting (30s)"
-    [[ $ELAPSED -eq 60 ]] && log "   ... waiting (60s)"
-    
-    sleep $CHECK_INTERVAL
+
+    [[ $ELAPSED -eq 30  ]] && log "   ... waiting (${RECEIVED}/${SERVER_COUNT} responded, 30s)"
+    [[ $ELAPSED -eq 60  ]] && log "   ... waiting (${RECEIVED}/${SERVER_COUNT} responded, 60s)"
+    [[ $ELAPSED -eq 90  ]] && log "   ... waiting (${RECEIVED}/${SERVER_COUNT} responded, 90s)"
+    [[ $ELAPSED -eq 120 ]] && log "   ... waiting (${RECEIVED}/${SERVER_COUNT} responded, 120s)"
+
+    sleep "$CHECK_INTERVAL"
 done
+set -e
+RECEIVED=${#WATCHER_RESULT_FILES[@]}
 
 # Parse watcher result file to get rollback details
 if [[ "$WATCHER_CONFIRMED" == true ]] && [[ -n "$RESULT_FILE" ]]; then
-    log "📄 Reading rollback details from watcher..."
-    
-    # Convert the path back to Windows format for PowerShell
-    RESULT_FILE_WIN=$(echo "$RESULT_FILE" | sed 's#/#\\#g')
-    
-    WATCHER_DATA=$("$POWERSHELL" -NoProfile -Command "
-        try {
-            if (Test-Path '$RESULT_FILE_WIN') {
-                Get-Content '$RESULT_FILE_WIN' -Raw -ErrorAction Stop
-            } else {
-                Write-Output 'FILE_NOT_FOUND'
-            }
-        } catch {
-            Write-Output \"ERROR: \$(\$_.Exception.Message)\"
-        }
-    " 2>&1)
-    
-    if [[ "$WATCHER_DATA" == *"FILE_NOT_FOUND"* ]]; then
-        log "   ⚠️  Warning: Confirmation file not accessible"
-        WATCHER_DEPLOY_ROOT="Confirmed (file not accessible)"
-        WATCHER_BACKUP="Confirmed (file not accessible)"
-        WATCHER_IIS="Unknown"
-        WATCHER_SERVER="PP-SERVER"
-    elif [[ "$WATCHER_DATA" == *"ERROR:"* ]]; then
-        log "   ⚠️  Warning: Error reading file: $WATCHER_DATA"
-        WATCHER_DEPLOY_ROOT="Confirmed (read error)"
-        WATCHER_BACKUP="Confirmed (read error)"
-        WATCHER_IIS="Unknown"
-        WATCHER_SERVER="PP-SERVER"
-    elif [[ -n "$WATCHER_DATA" ]] && [[ "$WATCHER_DATA" != "null" ]]; then
-        # Parse Key=Value format from the confirmation file
-        NORMALIZED_DATA=$(echo "$WATCHER_DATA" | sed 's/\r$//')
-        
-        WATCHER_DEPLOY_ROOT=$(echo "$NORMALIZED_DATA" | grep -E '^DeployRoot=' | cut -d'=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' || true)
-        if [[ -z "$WATCHER_DEPLOY_ROOT" ]]; then
-            WATCHER_DEPLOY_ROOT=$(echo "$NORMALIZED_DATA" | grep -E '^Site=' | cut -d'=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' || true)
-        fi
-        
-        WATCHER_BACKUP=$(echo "$NORMALIZED_DATA" | grep -E '^BackupRemoved=' | cut -d'=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' || true)
-        
-        WATCHER_IIS=$(echo "$NORMALIZED_DATA" | grep -E '^IISRestart=' | cut -d'=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' || true)
-        
-        WATCHER_SERVER=$(echo "$NORMALIZED_DATA" | grep -E '^WatcherNode=' | cut -d'=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' || true)
-        if [[ -z "$WATCHER_SERVER" ]]; then
-            WATCHER_SERVER=$(echo "$NORMALIZED_DATA" | grep -E '^Pool=' | cut -d'=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' || true)
-        fi
-        
-        [[ -z "$WATCHER_DEPLOY_ROOT" ]] && WATCHER_DEPLOY_ROOT="Path not in confirmation"
-        [[ -z "$WATCHER_BACKUP" ]] && WATCHER_BACKUP="Backup info not in confirmation"
-        [[ -z "$WATCHER_IIS" ]] && WATCHER_IIS="Not specified"
-        [[ -z "$WATCHER_SERVER" ]] && WATCHER_SERVER="DTSLC-PP"
-        
-        log "   ✓ Rollback details retrieved:"
-        log "      📁 Deploy Root: $WATCHER_DEPLOY_ROOT"
-        log "      🗑️  Backup Removed: $WATCHER_BACKUP"
-        log "      🔄 IIS Restart: $WATCHER_IIS"
-        log "      🖥️  Server: $WATCHER_SERVER"
-    else
-        log "   ⚠️  Warning: Confirmation file is empty"
-        WATCHER_DEPLOY_ROOT="Confirmed (details not available)"
-        WATCHER_BACKUP="Confirmed (details not available)"
-        WATCHER_IIS="Unknown"
-        WATCHER_SERVER="PP-SERVER"
-    fi
+    log "📄 Reading rollback details..."
+
+    WATCHER_DEPLOY_ROOT=$(grep -E '(DeployRoot|DeployPath)=' "$RESULT_FILE" | head -1 | cut -d'=' -f2- | tr -d '\r') || true
+    WATCHER_BACKUP=$(grep -E '(BackupRemoved|BackupPath)=' "$RESULT_FILE" | head -1 | cut -d'=' -f2- | tr -d '\r') || true
+    WATCHER_IIS=$(grep -E 'IISRestart=' "$RESULT_FILE" | head -1 | cut -d'=' -f2- | tr -d '\r') || true
+    WATCHER_SERVER=$(grep -E 'WatcherNode=' "$RESULT_FILE" | head -1 | cut -d'=' -f2- | tr -d '\r') || true
+
+    [[ -z "$WATCHER_DEPLOY_ROOT" ]] && WATCHER_DEPLOY_ROOT="Not in confirmation"
+    [[ -z "$WATCHER_BACKUP"      ]] && WATCHER_BACKUP="Not in confirmation"
+    [[ -z "$WATCHER_IIS"         ]] && WATCHER_IIS="Not specified"
+    [[ -z "$WATCHER_SERVER"      ]] && WATCHER_SERVER="DTSLC-PP"
+
+    log "   ✓ Deploy Root: $WATCHER_DEPLOY_ROOT"
+    log "   ✓ Backup:      $WATCHER_BACKUP"
+    log "   ✓ IIS Restart: $WATCHER_IIS"
+    log "   ✓ Server:      $WATCHER_SERVER"
 else
     WATCHER_DEPLOY_ROOT=""
     WATCHER_BACKUP=""
@@ -484,8 +607,37 @@ fi
 # Cleanup
 rm -f "$FLAG_PATH"
 
+log ""
+log "==================================================="
+if [[ "$WATCHER_CONFIRMED" == true ]]; then
+    log "🎉 ROLLBACK COMPLETE — $RECEIVED/$SERVER_COUNT servers responded"
+    log "   ✓ Deploy Root: $WATCHER_DEPLOY_ROOT"
+    log "   ✓ Backup:      $WATCHER_BACKUP"
+    log "   ✓ IIS Restart: $WATCHER_IIS"
+else
+    log "⚠️  FLAG UPLOADED — $RECEIVED/$SERVER_COUNT servers responded within ${MAX_WAIT}s"
+    log "   Flag uploaded to SFTP: ${SFTP_UPLOAD_DIR}/${RAW_FLAG}"
+fi
+log "==================================================="
+
+# ==================================================
+# STEP 8: RUN LOCAL SMOKE TESTS — DISABLED
+# ==================================================
+# Smoke test execution is skipped for this script. The step is kept as a
+# no-op placeholder (rather than deleted) so re-enabling it later is a
+# one-line revert, and so SITE_STATUS still exists for the email section
+# below without needing to touch that logic.
+log ""
+log "==================================================="
+log "🧪 SMOKE TESTS (LOCAL) — SKIPPED"
+log "==================================================="
+log "   ⏭  Smoke test step is disabled — not running"
+
+SITE_STATUS="⏭ Not tested — smoke test step is disabled"
+
 # ----------------------------------------------------
 # SEND EMAIL - WITH IMPROVED USER DETECTION
+# (now runs after smoke tests, so it can report SITE_STATUS)
 # ----------------------------------------------------
 # Try to get username from Git config first (who cloned the repo)
 GIT_USERNAME=$(git config user.name 2>/dev/null || echo "")
@@ -498,7 +650,7 @@ fi
 
 # If Git email not found, try Windows username
 if [[ -z "$GIT_EMAIL" ]]; then
-    WIN_USERNAME=$("$POWERSHELL" -NoProfile -Command "Write-Output \$env:USERNAME" 2>/dev/null | tr -d '\r\n')
+    WIN_USERNAME=$("$POWERSHELL" -NoProfile -Command "Write-Output \$env:USERNAME" 2>/dev/null | tr -d '\r\n') || WIN_USERNAME=""
     if [[ -n "$WIN_USERNAME" ]]; then
         GIT_USERNAME="$WIN_USERNAME"
         GIT_EMAIL="${WIN_USERNAME}@swish.co.il"
@@ -514,14 +666,30 @@ log ""
 log "   👤 Detected user: $TRIGGERED_BY"
 log "   📧 Email address: $EMAIL"
 
-if [[ "$WATCHER_CONFIRMED" == true ]]; then
-    EMAIL_SUBJECT="♻️ Rollback Completed — $PROJECT ($BRANCH)"
-    EMAIL_BADGE="✓ CONFIRMED BY WATCHER"
+# Base subject/badge on watcher confirmation, as before — but if the site
+# verification itself failed (rollback succeeded, smoke tests didn't), flip
+# to a warning presentation even though the watcher confirmed the rollback.
+SITE_VERIFY_FAILED=false
+if [[ "$SITE_STATUS" == "❌"* ]]; then
+    SITE_VERIFY_FAILED=true
+fi
+
+if [[ "$WATCHER_CONFIRMED" == true ]] && [[ "$SITE_VERIFY_FAILED" == false ]]; then
+    EMAIL_SUBJECT="✅ ROLLBACK PROCESS COMPLETED — $PROJECT ($BRANCH) — ${RECEIVED}/${SERVER_COUNT} servers"
+    EMAIL_BADGE="♻️ ROLLBACK STATUS: SUCCESS"
+    EMAIL_COLOR="#1976d2"
+    EMAIL_BADGE="♻️ ROLLBACK STATUS:SUCCESS "
     EMAIL_BGCOLOR="#e3f2fd"
     EMAIL_COLOR="#1976d2"
     EMAIL_FOOTER="<strong>✓ Rollback verified by watchdog service</strong><br>Previous deployment has been restored successfully."
+elif [[ "$WATCHER_CONFIRMED" == true ]] && [[ "$SITE_VERIFY_FAILED" == true ]]; then
+    EMAIL_SUBJECT="🟥 ROLLBACK PROCESS UNCOMPLETED — $PROJECT ($BRANCH) — ${RECEIVED}/${SERVER_COUNT} servers"
+    EMAIL_BADGE="⚠ ROLLBACK STATUS:UNSUCCESSFUL"
+    EMAIL_BGCOLOR="#fdecea"
+    EMAIL_COLOR="#c62828"
+    EMAIL_FOOTER="<strong>⚠ Rollback confirmed by watchdog, but the site did not pass smoke tests</strong><br>Please check the Allure report / log and verify manually."
 else
-    EMAIL_SUBJECT="🟨 Rollback Requested — $PROJECT ($BRANCH)"
+    EMAIL_SUBJECT="🟨 Rollback Requested — $PROJECT ($BRANCH) — ${RECEIVED}/${SERVER_COUNT} responded"
     EMAIL_BADGE="⚠ WATCHDOG DID NOT RESPOND"
     EMAIL_BGCOLOR="#fff3e0"
     EMAIL_COLOR="#ff9800"
@@ -534,6 +702,7 @@ WATCHER_BACKUP_ESC=$(echo "$WATCHER_BACKUP" | sed "s/'/''/g")
 WATCHER_IIS_ESC=$(echo "$WATCHER_IIS" | sed "s/'/''/g")
 WATCHER_SERVER_ESC=$(echo "$WATCHER_SERVER" | sed "s/'/''/g")
 DEPLOY_ROOT_ESC=$(echo "$DEPLOY_ROOT" | sed "s/'/''/g")
+SITE_STATUS_ESC=$(echo "$SITE_STATUS" | sed "s/'/''/g")
 
 log "📝 DEBUG: Email variables before sending:"
 log "   PROJECT='$PROJECT'"
@@ -542,6 +711,7 @@ log "   DEPLOY_ROOT='$WATCHER_DEPLOY_ROOT'"
 log "   BACKUP_REMOVED='$WATCHER_BACKUP'"
 log "   IIS_RESTART='$WATCHER_IIS'"
 log "   SERVER='$WATCHER_SERVER'"
+log "   SITE_STATUS='$SITE_STATUS'"
 
 EMAIL_RESULT=$("$POWERSHELL" -NoProfile -Command "
 try {
@@ -560,7 +730,8 @@ try {
     \$deployRoot = if ('$WATCHER_DEPLOY_ROOT_ESC' -ne '') { '$WATCHER_DEPLOY_ROOT_ESC' } else { '$DEPLOY_ROOT_ESC' }
     \$backupRemoved = if ('$WATCHER_BACKUP_ESC' -ne '') { '$WATCHER_BACKUP_ESC' } else { 'Not confirmed by watcher' }
     \$iisRestart = if ('$WATCHER_IIS_ESC' -ne '') { '$WATCHER_IIS_ESC' } else { 'Unknown' }
-    \$serverNode = if ('$WATCHER_SERVER_ESC' -ne '') { '$WATCHER_SERVER_ESC' } else { 'PP-SERVER' }
+    \$serverNode = if ('$WATCHER_SERVER_ESC' -ne '') { '$WATCHER_SERVER_ESC' } else { 'DTSLC-PP' }
+    \$siteStatus = '$SITE_STATUS_ESC'
     
     \$htmlBody = @\"
 <html>
@@ -631,12 +802,25 @@ try {
         <tr><td>Project</td><td><strong>\$project</strong></td></tr>
         <tr><td>Branch</td><td><strong>\$branch</strong></td></tr>
         <tr><td>Rollback Time</td><td>\$timestamp</td></tr>
-        <tr><td>Server</td><td>\$serverNode</td></tr>
+        <tr><td>Servers</td><td>${RECEIVED}/${SERVER_COUNT} responded</td></tr>
         <tr><td>Deployment Root</td><td>\$deployRoot</td></tr>
-        <tr><td>Backup Removed</td><td>\$backupRemoved</td></tr>
         <tr><td>Triggered By</td><td>\$triggeredBy</td></tr>
-        <tr><td>IIS Restart</td><td>\$iisRestart</td></tr>
+        <tr><td>Site Status</td><td>\$siteStatus</td></tr>
     </table>
+    $(
+      if [[ ${#WATCHER_RESULT_FILES[@]} -gt 0 ]]; then
+        echo "<br><table border='1' style='border-collapse:collapse;width:100%;font-size:12px;'>"
+        echo "<tr style='background:#f5f5f5;'><th style='padding:6px;'>Server</th><th style='padding:6px;'>Status</th><th style='padding:6px;'>IIS</th><th style='padding:6px;'>Backup</th></tr>"
+        for TXT_FILE in "${WATCHER_RESULT_FILES[@]}"; do
+          R_SERVER=$(grep -E 'WatcherNode=' "$TXT_FILE" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_SERVER="?"
+          R_STATUS=$(grep -E 'Status=' "$TXT_FILE" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_STATUS="?"
+          R_IIS=$(grep -E 'IISRestart=' "$TXT_FILE" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_IIS="?"
+          R_BACKUP=$(grep -E '(BackupRemoved|BackupPath)=' "$TXT_FILE" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_BACKUP="?"
+          echo "<tr><td style='padding:6px;'>$R_SERVER</td><td style='padding:6px;'>$R_STATUS</td><td style='padding:6px;'>$R_IIS</td><td style='padding:6px;font-family:monospace;font-size:11px;'>$R_BACKUP</td></tr>"
+        done
+        echo "</table>"
+      fi
+    )
     
     <div class='footer'>
         $EMAIL_FOOTER
@@ -668,16 +852,7 @@ fi
 
 log ""
 log "==================================================="
-if [[ "$WATCHER_CONFIRMED" == true ]]; then
-    log "🎉 ROLLBACK COMPLETE - WATCHER CONFIRMED"
-    log "   📁 Deployment Root: $WATCHER_DEPLOY_ROOT"
-    log "   🗑️  Backup Removed: $WATCHER_BACKUP"
-    log "   🔄 IIS Restart: $WATCHER_IIS"
-else
-    log "⚠️  ROLLBACK FLAG UPLOADED - WATCHER DID NOT RESPOND"
-    log "   Flag uploaded to: $RAW_REMOTE"
-    log "   Please verify watchdog service is processing the rollback"
-fi
+log "🏁 PIPELINE FINISHED"
 log "==================================================="
 
 exit 0

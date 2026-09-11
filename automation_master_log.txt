@@ -41,3 +41,44 @@
 [ 2026-06-14 18:39:39 ] SUCCESS
 [ 2026-06-14 18:39:39 ] 
 [ 2026-06-14 18:39:39 ] ❌ Project file not found: C:/Users/alexk/Desktop/Automation/BitBuketProject/behatzdaa_backend/DCards.Core.New/DCards.Core.New.csproj
+[ 2026-06-14 18:43:08 ] 🔍 Project: behatzdaa_backend
+[ 2026-06-14 18:43:09 ] 🔍 Branch: PP
+[ 2026-06-14 18:43:09 ] 
+[ 2026-06-14 18:43:09 ] ===================================================
+[ 2026-06-14 18:43:09 ] 🔧 CHECKING & INSTALLING DEPENDENCIES
+[ 2026-06-14 18:43:09 ] ===================================================
+[ 2026-06-14 18:43:10 ] 
+[ 2026-06-14 18:43:10 ] 📦 [STEP 1/4] Checking PowerShell prerequisites...
+[ 2026-06-14 18:43:20 ]    ✓ PowerShell prerequisites already present
+[ 2026-06-14 18:43:20 ] 
+[ 2026-06-14 18:43:20 ] 📦 [STEP 2/4] Checking jq...
+[ 2026-06-14 18:43:21 ]    ✓ jq is ready
+[ 2026-06-14 18:43:21 ] 
+[ 2026-06-14 18:43:21 ] 📦 [STEP 3/4] Checking SQL Server PowerShell module...
+[ 2026-06-14 18:43:23 ]    ✓ SqlServer module ready
+[ 2026-06-14 18:43:23 ] 
+[ 2026-06-14 18:43:24 ] 📦 [STEP 4/4] Checking Robocopy...
+[ 2026-06-14 18:43:25 ]    ✓ Robocopy is ready
+[ 2026-06-14 18:43:25 ] 
+[ 2026-06-14 18:43:25 ] ===================================================
+[ 2026-06-14 18:43:25 ] ✓ All dependencies ready
+[ 2026-06-14 18:43:26 ] ===================================================
+[ 2026-06-14 18:43:26 ] 
+[ 2026-06-14 18:43:26 ] 🔗 Loading config from database...
+[ 2026-06-14 18:43:30 ]    ✓ Config loaded
+[ 2026-06-14 18:43:30 ] 
+[ 2026-06-14 18:43:31 ] ===================================================
+[ 2026-06-14 18:43:31 ] 🚀 DEPLOYMENT STARTED (SIMPLE MODE)
+[ 2026-06-14 18:43:32 ] ===================================================
+[ 2026-06-14 18:43:32 ] 
+[ 2026-06-14 18:43:32 ] 📂 Preparing publish directory...
+[ 2026-06-14 18:43:33 ]     Publish base: D:\Publish
+[ 2026-06-14 18:43:34 ]     Project folder: behatzdaa_backend
+[ 2026-06-14 18:43:34 ]     Full path: D:\Publish\behatzdaa_backend
+[ 2026-06-14 18:43:34 ]     Found existing folder, deleting...
+[ 2026-06-14 18:43:35 ]    � Existing folder deleted
+[ 2026-06-14 18:43:35 ]     Creating fresh directory...
+[ 2026-06-14 18:43:35 ]    � Fresh directory created
+[ 2026-06-14 18:43:35 ] SUCCESS
+[ 2026-06-14 18:43:36 ] 
+[ 2026-06-14 18:43:36 ] 📦 Publishing .NET 8 project: Nofshonit.Api.csproj...
