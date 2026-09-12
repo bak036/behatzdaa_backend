@@ -1,0 +1,13 @@
+﻿Branch=PP
+DeployRoot=C:\inetpub\wwwroot\site\Productions\Behatsdaa_NofshonitBackApi
+Time=2026-09-12 12:52:11
+TriggeredBy=AutoDeploy
+IISRestart=Yes
+Project=behatzdaa_backend
+Site=Behatsdaa_NofshonitBackApi
+SmokeTestDetail=No smoke test directory configured for this project
+Status=Success
+BackupRemoved=C:\inetpub\wwwroot\site\Productions\Behatsdaa_NofshonitBackApi.2026-09-12_12.37.17
+Pool=Behatsdaa_NofshonitBackApi
+SmokeTestStatus=Skipped
+WatcherNode=DTSLC-PP02
