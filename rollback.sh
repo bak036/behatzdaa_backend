@@ -98,8 +98,55 @@ find_winscp() {
     return 1
 }
 
-WINSCP=$(find_winscp) || {
-    echo "❌ ERROR: WinSCP.com not found. Install WinSCP (winscp.net)."
+# ============================================================
+# Fallback: if WinSCP isn't installed anywhere on this machine,
+# download the official Portable build (no installer/UAC needed)
+# into a local cache and use that instead — so a fresh machine
+# doesn't need manual setup before this script can run. The
+# download URL pins an exact version; if it 404s (version no
+# longer current), this fails with a clear error rather than
+# hanging, and the fix is just updating WINSCP_PORTABLE_URL below
+# to whatever winscp.net/eng/download.php currently links to.
+# Cached under ~/.winscp-portable/ so this only downloads once.
+# ============================================================
+WINSCP_PORTABLE_URL="https://winscp.net/download/WinSCP-6.5.7-Portable.zip/download"
+WINSCP_PORTABLE_DIR="$HOME/.winscp-portable"
+
+to_windows_path_winscp() {
+    cygpath -w "$1" 2>/dev/null || echo "$1" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:\\|; s|^/\([a-zA-Z]\)/|\1:\\|; s|/|\\|g'
+}
+
+download_winscp_portable() {
+    if [[ -f "$WINSCP_PORTABLE_DIR/WinSCP.com" ]]; then
+        echo "$WINSCP_PORTABLE_DIR/WinSCP.com"
+        return 0
+    fi
+
+    echo "⚙  WinSCP not found locally. Downloading WinSCP Portable..." >&2
+    mkdir -p "$WINSCP_PORTABLE_DIR"
+    local zip_path="$WINSCP_PORTABLE_DIR/WinSCP-Portable.zip"
+
+    if ! curl -L --fail "$WINSCP_PORTABLE_URL" -o "$zip_path" 2>/dev/null; then
+        return 1
+    fi
+
+    local dest_win zip_win
+    dest_win=$(to_windows_path_winscp "$WINSCP_PORTABLE_DIR")
+    zip_win=$(to_windows_path_winscp "$zip_path")
+
+    "$POWERSHELL" -NoProfile -Command "Expand-Archive -Path '$zip_win' -DestinationPath '$dest_win' -Force" >/dev/null 2>&1
+    rm -f "$zip_path"
+
+    if [[ -f "$WINSCP_PORTABLE_DIR/WinSCP.com" ]]; then
+        echo "$WINSCP_PORTABLE_DIR/WinSCP.com"
+        return 0
+    fi
+    return 1
+}
+
+WINSCP=$(find_winscp) || WINSCP=$(download_winscp_portable) || {
+    echo "❌ ERROR: WinSCP.com not found, and the automatic Portable download/extraction failed."
+    echo "   Install WinSCP manually (winscp.net) or check WINSCP_PORTABLE_URL in this script — the pinned version may be outdated."
     exit 1
 }
 
