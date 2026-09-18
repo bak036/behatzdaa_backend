@@ -9,7 +9,10 @@ if (set -o pipefail >/dev/null 2>&1); then set -o pipefail; fi
 # Ensure Git Bash utilities (cygpath, etc.) are in PATH
 export PATH="/usr/bin:/usr/local/bin:$PATH"
 
-# cygpath fallback if still not found
+# cygpath fallback if still not found. Prefers wslpath when available
+# (the correct native tool under WSL, which lacks cygpath and uses
+# /mnt/c/... instead of Git Bash's /c/...); falls back to a manual sed
+# heuristic covering both path styles only if neither tool exists.
 if ! command -v cygpath >/dev/null 2>&1; then
     cygpath() {
         local flag="" path=""
@@ -22,8 +25,14 @@ if ! command -v cygpath >/dev/null 2>&1; then
             esac
         done
         if [[ "$flag" == "w" || "$flag" == "m" ]]; then
-            # Handle both /c/... and /mnt/c/... (WSL-style) paths
-            echo "$path" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:\\|; s|^/\([a-zA-Z]\)/|\1:\\|; s|/|\\|g'
+            if command -v wslpath >/dev/null 2>&1; then
+                wslpath "-$flag" "$path" 2>/dev/null && return 0
+            fi
+            if [[ "$flag" == "w" ]]; then
+                echo "$path" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:\\|; s|^/\([a-zA-Z]\)/|\1:\\|; s|/|\\|g'
+            else
+                echo "$path" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:/|; s|^/\([a-zA-Z]\)/|\1:/|'
+            fi
         else
             echo "$path"
         fi
@@ -112,10 +121,6 @@ find_winscp() {
 WINSCP_PORTABLE_URL="https://winscp.net/download/WinSCP-6.5.7-Portable.zip/download"
 WINSCP_PORTABLE_DIR="$HOME/.winscp-portable"
 
-to_windows_path_winscp() {
-    cygpath -w "$1" 2>/dev/null || echo "$1" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:\\|; s|^/\([a-zA-Z]\)/|\1:\\|; s|/|\\|g'
-}
-
 download_winscp_portable() {
     if [[ -f "$WINSCP_PORTABLE_DIR/WinSCP.com" ]]; then
         echo "$WINSCP_PORTABLE_DIR/WinSCP.com"
@@ -126,21 +131,36 @@ download_winscp_portable() {
     mkdir -p "$WINSCP_PORTABLE_DIR"
     local zip_path="$WINSCP_PORTABLE_DIR/WinSCP-Portable.zip"
 
-    if ! curl -L --fail "$WINSCP_PORTABLE_URL" -o "$zip_path" 2>/dev/null; then
+    local http_code
+    http_code=$(curl -L --fail -w "%{http_code}" -o "$zip_path" "$WINSCP_PORTABLE_URL" 2>&1)
+    local curl_exit=$?
+    if [[ $curl_exit -ne 0 ]]; then
+        echo "   curl failed (exit $curl_exit, http $http_code)" >&2
         return 1
     fi
+    if [[ ! -s "$zip_path" ]]; then
+        echo "   downloaded file is empty or missing" >&2
+        return 1
+    fi
+    echo "   downloaded $(wc -c < "$zip_path") bytes (http $http_code)" >&2
 
     local dest_win zip_win
-    dest_win=$(to_windows_path_winscp "$WINSCP_PORTABLE_DIR")
-    zip_win=$(to_windows_path_winscp "$zip_path")
+    dest_win=$(cygpath -w "$WINSCP_PORTABLE_DIR")
+    zip_win=$(cygpath -w "$zip_path")
 
-    "$POWERSHELL" -NoProfile -Command "Expand-Archive -Path '$zip_win' -DestinationPath '$dest_win' -Force" >/dev/null 2>&1
+    local ps_output
+    ps_output=$("$POWERSHELL" -NoProfile -Command "Expand-Archive -Path '$zip_win' -DestinationPath '$dest_win' -Force" 2>&1)
+    if [[ -n "$ps_output" ]]; then
+        echo "   Expand-Archive output: $ps_output" >&2
+    fi
     rm -f "$zip_path"
 
     if [[ -f "$WINSCP_PORTABLE_DIR/WinSCP.com" ]]; then
         echo "$WINSCP_PORTABLE_DIR/WinSCP.com"
         return 0
     fi
+    echo "   WinSCP.com not found in $WINSCP_PORTABLE_DIR after extraction — listing what's there:" >&2
+    ls -la "$WINSCP_PORTABLE_DIR" >&2
     return 1
 }
 
@@ -152,7 +172,7 @@ WINSCP=$(find_winscp) || WINSCP=$(download_winscp_portable) || {
 
 SFTP_TMP="$ROOT/.sftp_tmp_$$"
 mkdir -p "$SFTP_TMP"
-SFTP_TMP_WIN=$(echo "$SFTP_TMP" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:\\|; s|^/\([a-zA-Z]\)/|\1:\\|; s|/|\\|g')
+SFTP_TMP_WIN=$(cygpath -w "$SFTP_TMP")
 cleanup_sftp() { rm -rf "$SFTP_TMP" 2>/dev/null || true; }
 trap cleanup_sftp EXIT
 
@@ -160,8 +180,7 @@ run_winscp() {
     local script_file="$1"
     local output_file="$2"
     local script_win
-    # Use sed to convert path — cygpath may mishandle /mnt/c/ style paths
-    script_win=$(echo "$script_file" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:\\|; s|^/\([a-zA-Z]\)/|\1:\\|; s|/|\\|g')
+    script_win=$(cygpath -w "$script_file")
     MSYS_NO_PATHCONV=1 "$WINSCP" /ini=nul /script="$script_win" > "$output_file" 2>&1
 }
 
@@ -485,7 +504,7 @@ log "🪶 [1/2] Creating rollback flag..."
 
 FLAG_PATH="$SFTP_TMP/${RAW_FLAG}"
 echo "rollback triggered $(date)" > "$FLAG_PATH"
-FLAG_WIN=$(echo "$FLAG_PATH" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:\\|; s|^/\([a-zA-Z]\)/|\1:\\|; s|/|\\|g')
+FLAG_WIN=$(cygpath -w "$FLAG_PATH")
 log "   ✓ Flag created: $RAW_FLAG"
 
 ROLLBACK_START_LOCAL=$("$POWERSHELL" -NoProfile -Command "(Get-Date).ToString('yyyy-MM-dd HH:mm:ss')" 2>/dev/null | tr -d '\r\n') || ROLLBACK_START_LOCAL=""
@@ -523,7 +542,7 @@ RESULT_FILE=""
 
 LOCAL_CONFIRM_DIR="$ROOT/.rollback_confirmations"
 mkdir -p "$LOCAL_CONFIRM_DIR"
-LOCAL_CONFIRM_WIN=$(echo "$LOCAL_CONFIRM_DIR" | sed 's|^/mnt/\([a-zA-Z]\)/|\1:\\|; s|^/\([a-zA-Z]\)/|\1:\\|; s|/|\\|g')
+LOCAL_CONFIRM_WIN=$(cygpath -w "$LOCAL_CONFIRM_DIR")
 
 # ── Query expected server count from ProjectRules ────────────────────
 connStr="Server=${DB_SERVER};Database=${DB_NAME};User ID=${DB_USER};Password=${DB_PASSWORD};TrustServerCertificate=True;"
