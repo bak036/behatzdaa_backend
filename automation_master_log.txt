@@ -2885,3 +2885,164 @@
 [ 2026-09-18 12:55:21 ] 📤 Uploading rollback flag → /pp/behatzdaa_backend_PP_rollback.flag
 [ 2026-09-18 12:55:21 ] ❌ ERROR: Failed to upload rollback flag
 [ 2026-09-18 12:55:21 ]    rollback.sh: line 184: /home/bak036/.winscp-portable/WinSCP.com: Permission denied
+[ 2026-09-18 17:05:34 ] 🔍 Detected project: behatzdaa_backend
+[ 2026-09-18 17:05:34 ] 🔍 Detected branch: PP
+[ 2026-09-18 17:05:34 ] 
+[ 2026-09-18 17:05:34 ] ===================================================
+[ 2026-09-18 17:05:34 ] 🔧 CHECKING & INSTALLING DEPENDENCIES
+[ 2026-09-18 17:05:34 ] ===================================================
+[ 2026-09-18 17:05:34 ] 📦 Checking PowerShell prerequisites...
+[ 2026-09-18 17:05:51 ]    ✓ PowerShell prerequisites already present
+[ 2026-09-18 17:05:51 ] 📦 Checking jq...
+[ 2026-09-18 17:05:51 ]    ⚙  jq not found. Installing...
+[ 2026-09-18 17:05:51 ] 📦 Checking SQL Server PowerShell module...
+[ 2026-09-18 17:05:54 ]    ✓ SqlServer module ready
+[ 2026-09-18 17:05:54 ] ===================================================
+[ 2026-09-18 17:05:54 ] ✓ All dependencies ready
+[ 2026-09-18 17:05:54 ] ===================================================
+[ 2026-09-18 17:05:54 ] 
+[ 2026-09-18 17:05:54 ] 📊 Loading configuration from database...
+[ 2026-09-18 17:05:54 ]    Server: 172.29.92.20\sql2005
+[ 2026-09-18 17:05:54 ]    Database: NofTest
+[ 2026-09-18 17:05:55 ]    Looking for: Project='behatzdaa_backend', Branch='PP'
+[ 2026-09-18 17:05:58 ]    ✓ Configuration loaded from database
+[ 2026-09-18 17:05:58 ] 🔄 Replacing variables in configuration...
+[ 2026-09-18 17:05:58 ] ===============================================================
+[ 2026-09-18 17:05:58 ] == ♻️  ROLLBACK STARTED ==
+[ 2026-09-18 17:05:58 ] ===============================================================
+[ 2026-09-18 17:05:58 ] Project:      behatzdaa_backend
+[ 2026-09-18 17:05:58 ] Branch:       PP
+[ 2026-09-18 17:05:58 ] Flag:         behatzdaa_backend_PP_rollback.flag
+[ 2026-09-18 17:05:58 ] SFTP:         sftp.dts.co.il:22
+[ 2026-09-18 17:05:58 ] SFTP folder:  /pp
+[ 2026-09-18 17:05:58 ] Deploy Root:  D:\Publish\behatzdaa_backend
+[ 2026-09-18 17:05:58 ] ===============================================================
+[ 2026-09-18 17:05:58 ] 🪶 [1/2] Creating rollback flag...
+[ 2026-09-18 17:05:58 ]    ✓ Flag created: behatzdaa_backend_PP_rollback.flag
+[ 2026-09-18 17:05:59 ] 📤 Uploading rollback flag → /pp/behatzdaa_backend_PP_rollback.flag
+[ 2026-09-18 17:05:59 ] ❌ ERROR: Failed to upload rollback flag
+[ 2026-09-18 17:05:59 ]    rollback.sh: line 184: /home/bak036/.winscp-portable/WinSCP.com: Permission denied
+[ 2026-09-18 17:18:44 ] 🔍 Detected project: behatzdaa_backend
+[ 2026-09-18 17:18:44 ] 🔍 Detected branch: PP
+[ 2026-09-18 17:18:44 ] 
+[ 2026-09-18 17:18:44 ] ===================================================
+[ 2026-09-18 17:18:44 ] 🔧 CHECKING & INSTALLING DEPENDENCIES
+[ 2026-09-18 17:18:44 ] ===================================================
+[ 2026-09-18 17:18:44 ] 📦 Checking PowerShell prerequisites...
+[ 2026-09-18 17:18:54 ]    ✓ PowerShell prerequisites already present
+[ 2026-09-18 17:18:54 ] 📦 Checking jq...
+[ 2026-09-18 17:18:55 ]    ⚙  jq not found. Installing...
+[ 2026-09-18 17:18:55 ] 📦 Checking SQL Server PowerShell module...
+[ 2026-09-18 17:18:56 ]    ✓ SqlServer module ready
+[ 2026-09-18 17:18:56 ] ===================================================
+[ 2026-09-18 17:18:56 ] ✓ All dependencies ready
+[ 2026-09-18 17:18:56 ] ===================================================
+[ 2026-09-18 17:18:56 ] 
+[ 2026-09-18 17:18:56 ] 📊 Loading configuration from database...
+[ 2026-09-18 17:18:56 ]    Server: 172.29.92.20\sql2005
+[ 2026-09-18 17:18:56 ]    Database: NofTest
+[ 2026-09-18 17:18:56 ]    Looking for: Project='behatzdaa_backend', Branch='PP'
+[ 2026-09-18 17:19:00 ]    ✓ Configuration loaded from database
+[ 2026-09-18 17:19:00 ] 🔄 Replacing variables in configuration...
+[ 2026-09-18 17:19:01 ] ===============================================================
+[ 2026-09-18 17:19:01 ] == ♻️  ROLLBACK STARTED ==
+[ 2026-09-18 17:19:01 ] ===============================================================
+[ 2026-09-18 17:19:01 ] Project:      behatzdaa_backend
+[ 2026-09-18 17:19:01 ] Branch:       PP
+[ 2026-09-18 17:19:01 ] Flag:         behatzdaa_backend_PP_rollback.flag
+[ 2026-09-18 17:19:01 ] SFTP:         sftp.dts.co.il:22
+[ 2026-09-18 17:19:01 ] SFTP folder:  /pp
+[ 2026-09-18 17:19:01 ] Deploy Root:  D:\Publish\behatzdaa_backend
+[ 2026-09-18 17:19:01 ] ===============================================================
+[ 2026-09-18 17:19:01 ] 🪶 [1/2] Creating rollback flag...
+[ 2026-09-18 17:19:01 ]    ✓ Flag created: behatzdaa_backend_PP_rollback.flag
+[ 2026-09-18 17:19:01 ] 📤 Uploading rollback flag → /pp/behatzdaa_backend_PP_rollback.flag
+[ 2026-09-18 17:19:01 ] ❌ ERROR: Failed to upload rollback flag
+[ 2026-09-18 17:19:01 ]    rollback.sh: line 192: /home/bak036/.winscp-portable/WinSCP.com: Permission denied
+[ 2026-09-18 17:23:15 ] 🔍 Detected project: behatzdaa_backend
+[ 2026-09-18 17:23:15 ] 🔍 Detected branch: PP
+[ 2026-09-18 17:23:15 ] 
+[ 2026-09-18 17:23:15 ] ===================================================
+[ 2026-09-18 17:23:15 ] 🔧 CHECKING & INSTALLING DEPENDENCIES
+[ 2026-09-18 17:23:15 ] ===================================================
+[ 2026-09-18 17:23:15 ] 📦 Checking PowerShell prerequisites...
+[ 2026-09-18 17:23:25 ]    ✓ PowerShell prerequisites already present
+[ 2026-09-18 17:23:25 ] 📦 Checking jq...
+[ 2026-09-18 17:23:25 ]    ⚙  jq not found. Installing...
+[ 2026-09-18 17:23:25 ] 📦 Checking SQL Server PowerShell module...
+[ 2026-09-18 17:23:27 ]    ✓ SqlServer module ready
+[ 2026-09-18 17:23:27 ] ===================================================
+[ 2026-09-18 17:23:27 ] ✓ All dependencies ready
+[ 2026-09-18 17:23:27 ] ===================================================
+[ 2026-09-18 17:23:27 ] 
+[ 2026-09-18 17:23:27 ] 📊 Loading configuration from database...
+[ 2026-09-18 17:23:27 ]    Server: 172.29.92.20\sql2005
+[ 2026-09-18 17:23:27 ]    Database: NofTest
+[ 2026-09-18 17:23:27 ]    Looking for: Project='behatzdaa_backend', Branch='PP'
+[ 2026-09-18 17:23:29 ]    ✓ Configuration loaded from database
+[ 2026-09-18 17:23:29 ] 🔄 Replacing variables in configuration...
+[ 2026-09-18 17:23:29 ] ===============================================================
+[ 2026-09-18 17:23:29 ] == ♻️  ROLLBACK STARTED ==
+[ 2026-09-18 17:23:29 ] ===============================================================
+[ 2026-09-18 17:23:29 ] Project:      behatzdaa_backend
+[ 2026-09-18 17:23:29 ] Branch:       PP
+[ 2026-09-18 17:23:29 ] Flag:         behatzdaa_backend_PP_rollback.flag
+[ 2026-09-18 17:23:29 ] SFTP:         sftp.dts.co.il:22
+[ 2026-09-18 17:23:29 ] SFTP folder:  /pp
+[ 2026-09-18 17:23:29 ] Deploy Root:  D:\Publish\behatzdaa_backend
+[ 2026-09-18 17:23:29 ] ===============================================================
+[ 2026-09-18 17:23:29 ] 🪶 [1/2] Creating rollback flag...
+[ 2026-09-18 17:23:29 ]    ✓ Flag created: behatzdaa_backend_PP_rollback.flag
+[ 2026-09-18 17:23:30 ] 📤 Uploading rollback flag → /pp/behatzdaa_backend_PP_rollback.flag
+[ 2026-09-18 17:23:31 ]    ✓ Rollback flag uploaded successfully
+[ 2026-09-18 17:23:31 ] ⏳ [2/2] Waiting for watcher confirmation via SFTP (/pp)...
+[ 2026-09-18 17:23:33 ]    Expecting responses from 1 server(s)...
+[ 2026-09-18 17:24:06 ] 
+[ 2026-09-18 17:24:06 ]    📥 Response from server: DTSLC-PP02 → Status: Success
+[ 2026-09-18 17:24:06 ]       | ﻿Branch=PP
+[ 2026-09-18 17:24:06 ]       | DeployRoot=C:\inetpub\wwwroot\site\Productions\Behatsdaa_NofshonitBackApi
+[ 2026-09-18 17:24:06 ]       | Time=2026-09-18 17:23:55
+[ 2026-09-18 17:24:06 ]       | TriggeredBy=AutoDeploy
+[ 2026-09-18 17:24:06 ]       | IISRestart=Yes
+[ 2026-09-18 17:24:06 ]       | Project=behatzdaa_backend
+[ 2026-09-18 17:24:06 ]       | Site=Behatsdaa_NofshonitBackApi
+[ 2026-09-18 17:24:06 ]       | SmokeTestDetail=No smoke test directory configured for this project
+[ 2026-09-18 17:24:06 ]       | Status=Success
+[ 2026-09-18 17:24:06 ]       | BackupRemoved=C:\inetpub\wwwroot\site\Productions\Behatsdaa_NofshonitBackApi.2026-09-18_11.37.55
+[ 2026-09-18 17:24:06 ]       | Pool=Behatsdaa_NofshonitBackApi
+[ 2026-09-18 17:24:06 ]       | SmokeTestStatus=Skipped
+[ 2026-09-18 17:24:06 ]       | WatcherNode=DTSLC-PP02
+[ 2026-09-18 17:24:06 ]    ✅ All 1 server(s) confirmed after 28s!
+[ 2026-09-18 17:24:06 ] 📄 Reading rollback details...
+[ 2026-09-18 17:24:06 ]    ✓ Deploy Root: C:\inetpub\wwwroot\site\Productions\Behatsdaa_NofshonitBackApi
+[ 2026-09-18 17:24:06 ]    ✓ Backup:      C:\inetpub\wwwroot\site\Productions\Behatsdaa_NofshonitBackApi.2026-09-18_11.37.55
+[ 2026-09-18 17:24:06 ]    ✓ IIS Restart: Yes
+[ 2026-09-18 17:24:06 ]    ✓ Server:      DTSLC-PP02
+[ 2026-09-18 17:24:06 ] 
+[ 2026-09-18 17:24:06 ] ===================================================
+[ 2026-09-18 17:24:06 ] 🎉 ROLLBACK COMPLETE — 1/1 servers responded
+[ 2026-09-18 17:24:06 ]    ✓ Deploy Root: C:\inetpub\wwwroot\site\Productions\Behatsdaa_NofshonitBackApi
+[ 2026-09-18 17:24:06 ]    ✓ Backup:      C:\inetpub\wwwroot\site\Productions\Behatsdaa_NofshonitBackApi.2026-09-18_11.37.55
+[ 2026-09-18 17:24:06 ]    ✓ IIS Restart: Yes
+[ 2026-09-18 17:24:06 ] ===================================================
+[ 2026-09-18 17:24:06 ] 
+[ 2026-09-18 17:24:06 ] ===================================================
+[ 2026-09-18 17:24:06 ] 🧪 SMOKE TESTS (LOCAL) — SKIPPED
+[ 2026-09-18 17:24:06 ] ===================================================
+[ 2026-09-18 17:24:06 ]    ⏭  Smoke test step is disabled — not running
+[ 2026-09-18 17:24:06 ] 
+[ 2026-09-18 17:24:06 ]    👤 Detected user: bak036
+[ 2026-09-18 17:24:06 ]    📧 Email address: bak036@gmail.com
+[ 2026-09-18 17:24:06 ] 📝 DEBUG: Email variables before sending:
+[ 2026-09-18 17:24:06 ]    PROJECT='behatzdaa_backend'
+[ 2026-09-18 17:24:06 ]    BRANCH='PP'
+[ 2026-09-18 17:24:06 ]    DEPLOY_ROOT='C:\inetpub\wwwroot\site\Productions\Behatsdaa_NofshonitBackApi'
+[ 2026-09-18 17:24:06 ]    BACKUP_REMOVED='C:\inetpub\wwwroot\site\Productions\Behatsdaa_NofshonitBackApi.2026-09-18_11.37.55'
+[ 2026-09-18 17:24:06 ]    IIS_RESTART='Yes'
+[ 2026-09-18 17:24:06 ]    SERVER='DTSLC-PP02'
+[ 2026-09-18 17:24:06 ]    SITE_STATUS='⏭ Not tested — smoke test step is disabled'
+[ 2026-09-18 17:24:09 ]    ✓ Email sent successfully!
+[ 2026-09-18 17:24:09 ] 
+[ 2026-09-18 17:24:09 ] ===================================================
+[ 2026-09-18 17:24:09 ] 🏁 PIPELINE FINISHED
+[ 2026-09-18 17:24:09 ] ===================================================
