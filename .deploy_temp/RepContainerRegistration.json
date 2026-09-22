@@ -1,0 +1,44 @@
+{
+  "components": [
+    {
+      "type": "Nofshonit.Infrastructure.Configuration.CacheManager, Nofshonit.Infrastructure",
+      "services": [
+        {
+          "type": "Nofshonit.Infrastructure.Configuration.ICacheManager, Nofshonit.Infrastructure"
+
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Repositories.DtsOnlineModel.DtsOnlineRepo, Nofshonit.Repositories",
+      "services": [
+        {
+          "type": "Nofshonit.Repositories.DtsOnlineModel.IDtsOnlineRepo, Nofshonit.Repositories"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Repositories.ClubModel.ClubRepo, Nofshonit.Repositories",
+
+      "services": [
+        {
+          "type": "Nofshonit.Repositories.ClubModel.IClubRepo, Nofshonit.Repositories"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Infrastructure.Communication.HttpContextHelper, Nofshonit.Infrastructure",
+
+      "services": [
+        {
+          "type": "Nofshonit.Infrastructure.Communication.IHttpContextHelper, Nofshonit.Infrastructure"
+        }
+      ],
+      "injectProperties": true
+    }
+  ]
+}
+

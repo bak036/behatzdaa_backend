@@ -1,0 +1,461 @@
+{
+  "components": [
+    {
+      "type": "Nofshonit.Services.OrderService.OrderService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IOrderService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Services.UsersService.UserService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IUserService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Services.AddressesService.AddressesService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IAddressesService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Addresses.AddressesBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IAddressesBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Services.MediaService.MediaService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IMediaService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Services.CouponService.CouponService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.ICouponService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Services.CategoryService.CategoryService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.ICategoryService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Services.ProductService.ProductService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IProductService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Infrastructure.Configuration.CacheManager, Nofshonit.Infrastructure",
+      "services": [
+        {
+          "type": "Nofshonit.Infrastructure.Configuration.ICacheManager, Nofshonit.Infrastructure"
+        }
+      ],
+      "injectProperties": true,
+      "instanceScope": "singleinstance"
+    },
+    {
+      "type": "Nofshonit.Common.Infrastructure.ContextManager, Nofshonit.Common",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Infrastructure.IContextManager, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Api.Controllers.Base.ApiLogger, Nofshonit.Api",
+      "services": [
+        {
+          "type": "Nofshonit.Infrastructure.Utils.Log.ILog, Nofshonit.Infrastructure"
+        }
+      ],
+      "injectProperties": true,
+      "instanceScope": "singleinstance"
+    },
+
+    {
+      "type": "Nofshonit.BL.User.UserBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IUserBL, Nofshonit.Common",
+          "key": "Miluim"
+        }
+      ],
+      "injectProperties": true
+    },
+
+    {
+      "type": "Nofshonit.BL.Order.OrderBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IOrderBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Media.MediaBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IMediaBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Coupon.CouponBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.ICouponBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Category.CategoryBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.ICategoryBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Product.ProductBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IProductBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Repositories.DtsOnlineModel.DtsOnlineRepo, Nofshonit.Repositories",
+      "services": [
+        {
+          "type": "Nofshonit.Repositories.DtsOnlineModel.IDtsOnlineRepo, Nofshonit.Repositories"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Repositories.ClubModel.ClubRepo, Nofshonit.Repositories",
+      "services": [
+        {
+          "type": "Nofshonit.Repositories.ClubModel.IClubRepo, Nofshonit.Repositories"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Infrastructure.Communication.HttpContextHelper, Nofshonit.Infrastructure",
+      "services": [
+        {
+          "type": "Nofshonit.Infrastructure.Communication.IHttpContextHelper, Nofshonit.Infrastructure"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Common.DTOs.MapperManagement.MapperManager, Nofshonit.Common",
+      "services": [
+        {
+          "type": "Nofshonit.Common.DTOs.MapperManagement.IMapperManager, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true,
+      "instanceScope": "singleinstance"
+    },
+    {
+      "type": "Nofshonit.Services.PurchaseService.PurchaseService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IPurchaseService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Purchase.PurchaseBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IPurchaseBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Infrastructure.Configuration.ConfigurationManager, Nofshonit.Infrastructure",
+      "services": [
+        {
+          "type": "Nofshonit.Infrastructure.Configuration.IConfigurationManager, Nofshonit.Infrastructure"
+        }
+      ],
+      "injectProperties": true,
+      "instanceScope": "singleinstance"
+    },
+    {
+      "type": "Nofshonit.Services.ContactUs.ContactUsService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IContactUsService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Contact.ContactUsBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IContactUsBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Product.ProductBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IProductBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Services.ShopingBasketService.ShopingBasketService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IShopingBasketService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.ShopingBasketFolder.ShopingBasketBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IShopingBasketBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Services.CardsService.CardsService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.ICardsService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Cards.CardsBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.ICardsBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Services.TagsService.TagsService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.ITagsService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Tags.TagsBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.ITagsBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Services.SearchService.SearchService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.ISearchService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Search.SearchBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.ISearchBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Services.LimitationsService.LimitationsService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.ILimitationsService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Limitations.LimitationsBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.ILimitationsBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Services.Event.EventService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IEventService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Event.EventBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IEventBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Services.BusinessService.BusinessService, Nofshonit.Services",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IBusinessService, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Business.BusinessBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IBusinessBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.Repositories.DtsLogsModel.DtsLogsRepo, Nofshonit.Repositories",
+      "services": [
+        {
+          "type": "Nofshonit.Repositories.DtsLogsModel.IDtsLogsRepo, Nofshonit.Repositories"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Config.ConfigBL, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.IConfigBL, Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Product.ProductUtils.ProductHandler.ProductHandler, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.BL.Product.ProductUtils.ProductHandler.IProductHandler, Nofshonit.BL"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Product.ProductUtils.VariantBuilder.VariantBuilder, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.BL.Product.ProductUtils.VariantBuilder.IVariantBuilder, Nofshonit.BL"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.RestApiGW.RestApiGW, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.BL.RestApiGW.IRestApiGW, Nofshonit.BL"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Purchase.PurchaseUtils.PurchaseHandler.PurchaseHandler, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.BL.Purchase.PurchaseUtils.PurchaseHandler.IPurchaseHandler, Nofshonit.BL"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "TicketsHubRepository.TicketsHubRepo, TicketsHubRepository",
+      "services": [
+        {
+          "type": "TicketsHubRepository.ITicketsHubRepo, TicketsHubRepository"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.Order.OrderUtils.OrderHandler.OrderHandler, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.BL.Order.OrderUtils.OrderHandler.IOrderHandler, Nofshonit.BL"
+        }
+      ],
+      "injectProperties": true
+    },
+    {
+      "type": "Nofshonit.BL.CreditGuard.CreditGuard, Nofshonit.BL",
+      "services": [
+        {
+          "type": "Nofshonit.Common.Interfaces.ICreditGuard,Nofshonit.Common"
+        }
+      ],
+      "injectProperties": true
+    }
+  ]
+}
