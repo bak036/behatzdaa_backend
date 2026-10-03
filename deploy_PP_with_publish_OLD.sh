@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # ===========================================================
-# deploy_PP_with_publish.sh - beyahad_backend
+# deploy_PP_with_publish.sh - beazdaa_backend
+# deploy_PP_with_publish.sh - beazdaa_backend
 # Builds & publishes  locally, packages it,
 # and uploads it to the PP remote server.
 # ===========================================================
@@ -609,23 +610,6 @@ REMOTE_SERVER=$(normalize_path "$REMOTE_SERVER")
 LOCAL_PUBLISH_DIR=$(normalize_path "$LOCAL_PUBLISH_DIR")
 ZIP_PATH=$(normalize_path "$ZIP_PATH")
 
-# ============================================================
-# CI/CD telemetry — records this run in NofTest.dbo.CicdDeployments*
-# (schema: cicd_schema.sql, helper: cicd_db.sh next to this script).
-# Fully optional: if the helper is missing or a DB write fails, the
-# deploy continues exactly as before.
-# ============================================================
-if [[ -f "$SCRIPT_DIR/cicd_db.sh" ]]; then
-    # shellcheck disable=SC1091
-    source "$SCRIPT_DIR/cicd_db.sh"
-fi
-for _f in cicd_start cicd_step cicd_update cicd_set_zip cicd_server_result_from_file cicd_set_smoke_from_file cicd_finish_auto cicd_on_exit; do
-    declare -F "$_f" >/dev/null || eval "$_f() { return 0; }"
-done
-trap 'cicd_on_exit' EXIT
-cicd_start "DEPLOY" "$PROJECT" "$BRANCH" "${PROJECT}_${BRANCH}_publish.zip"
-T_BUILD=$(date +%s)
-
 log "==================================================="
 log "🚀 DEPLOYMENT STARTED"
 log "==================================================="
@@ -768,8 +752,6 @@ log ""
 # configured that isn't reachable for this check — confirmed by the
 # "NU1900 ... nuget.telerik.com" warning on every build. Without this
 # restriction, the scan hangs trying to reach that feed.
-cicd_step "BUILD" "SUCCESS" "$T_BUILD"
-T_DEVSEC=$(date +%s)
 log "==================================================="
 log "🔒 DEVSEC VULNERABILITY SCAN"
 log "==================================================="
@@ -821,12 +803,6 @@ else
     DEVSEC_HAS_ISSUES=false
 fi
 
-case "${DEVSEC_HAS_ISSUES:-}" in
-    true)  cicd_update "VulnScan='FAIL'" ;;
-    false) cicd_update "VulnScan='PASS'" ;;
-esac
-cicd_step "DEVSEC" "SUCCESS" "$T_DEVSEC"
-
 log "==================================================="
 log "✓ DevSec scan complete"
 log "==================================================="
@@ -835,7 +811,6 @@ log ""
 # ==================================================
 # STEP 2: CREATING DEPLOYMENT PACKAGE
 # ==================================================
-T_PACKAGE=$(date +%s)
 log "==================================================="
 log "📦 CREATING DEPLOYMENT PACKAGE"
 log "==================================================="
@@ -895,13 +870,10 @@ fi
 
 log "   ✓ ZIP created: $(basename "$RAW_ZIP")"
 log ""
-cicd_set_zip "${PROJECT}_${BRANCH}_publish.zip" "$ZIP_PATH"
-cicd_step "PACKAGE" "SUCCESS" "$T_PACKAGE"
 
 # ==================================================
 # STEP 3: UPLOADING TO SFTP VAULT
 # ==================================================
-T_UPLOAD=$(date +%s)
 log "==================================================="
 log "📤 UPLOADING TO SFTP VAULT ($SFTP_HOST:$SFTP_PORT$SFTP_UPLOAD_DIR)"
 log "==================================================="
@@ -938,12 +910,10 @@ fi
 
 log "   ✓ Uploaded to ${SFTP_UPLOAD_DIR}/${SFTP_ZIP_NAME}"
 log ""
-cicd_step "UPLOAD" "SUCCESS" "$T_UPLOAD"
 
 # ==================================================
 # STEP 4: WAITING FOR WATCHER CONFIRMATION
 # ==================================================
-T_WAIT=$(date +%s)
 log "==================================================="
 log "⏳ WAITING FOR WATCHER CONFIRMATION"
 log "==================================================="
@@ -953,29 +923,20 @@ mkdir -p "$LOCAL_CONFIRM_DIR"
 LOCAL_CONFIRM_WIN=$(cygpath -w "$LOCAL_CONFIRM_DIR")
 
 connStr="Server=${DB_SERVER};Database=${DB_NAME};User ID=${DB_USER};Password=${DB_PASSWORD};TrustServerCertificate=True;"
-# Expected server count: retried so that one transient DB hiccup does not silently turn a
-# multi-server project into a "1 server" wait.
-SERVER_COUNT=""
-for _sc_try in 1 2 3; do
-    SERVER_COUNT=$("$POWERSHELL" -NoProfile -Command "
+SERVER_COUNT=$("$POWERSHELL" -NoProfile -Command "
     try {
         Import-Module SqlServer -ErrorAction Stop | Out-Null
         \$r = Invoke-Sqlcmd -ConnectionString '$connStr' -Query \"SELECT COUNT(*) AS cnt FROM ProjectRules WHERE ProjectName='${PROJECT_NAME}' AND Branch='${BRANCH}' AND ServerName IS NOT NULL AND ServerName != ''\"
         Write-Output \$r.cnt
-    } catch { Write-Output 'ERR' }
-" 2>/dev/null | tr -d '\r\n') || SERVER_COUNT=""
-    [[ "$SERVER_COUNT" =~ ^[0-9]+$ ]] && break
-    log "   ⚠️  Server-count lookup failed (attempt $_sc_try/3)"
-    sleep 3
-done
-[[ "$SERVER_COUNT" =~ ^[0-9]+$ ]] || { log "   ⚠️  Could not read the server count from ProjectRules — assuming 1"; SERVER_COUNT=1; }
+    } catch { Write-Output 1 }
+" 2>/dev/null | tr -d '\r\n') || SERVER_COUNT=1
+[[ "$SERVER_COUNT" =~ ^[0-9]+$ ]] || SERVER_COUNT=1
 [[ "$SERVER_COUNT" -eq 0 ]] && SERVER_COUNT=1
 
 log "   Expecting responses from $SERVER_COUNT server(s)..."
 
 WATCHER_CONFIRMED=false
 WATCHER_RESULT_FILES=()
-FAILED_RESULT_FILES=()
 declare -A SEEN_DEPLOY_FILES
 CHECK_INTERVAL=4
 MAX_WAIT=600
@@ -998,23 +959,9 @@ EOF
     rm -f "$TMP_SCRIPT"
 
     while IFS= read -r line; do
-        FNAME=$(echo "$line" | grep -oE "${PROJECT_NAME}_${BRANCH}_Deploy_(Success|Failed)_[^ ]+" | head -1) || true
+        FNAME=$(echo "$line" | grep -oE "${PROJECT_NAME}_${BRANCH}_Deploy_Success_[^ ]+" | head -1) || true
         [[ -z "$FNAME" ]] && continue
         [[ -n "${SEEN_DEPLOY_FILES[$FNAME]:-}" ]] && continue
-
-        # A Failed result left on SFTP by an older run must not be attributed
-        # to this run — skip it (and leave it untouched) if its timestamp
-        # predates this script's start.
-        if [[ "$FNAME" == *"_Deploy_Failed_"* ]]; then
-            F_TS=$(echo "$FNAME" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}\.[0-9]{2}\.[0-9]{2}' | head -1) || F_TS=""
-            if [[ -n "$F_TS" ]]; then
-                F_EPOCH=$(date -d "${F_TS:0:10} ${F_TS:11:2}:${F_TS:14:2}:${F_TS:17:2}" +%s 2>/dev/null) || F_EPOCH=0
-                if (( F_EPOCH > 0 && F_EPOCH < ${CICD_START_EPOCH:-0} - 120 )); then
-                    SEEN_DEPLOY_FILES[$FNAME]=1
-                    continue
-                fi
-            fi
-        fi
 
         TMP_GET=$(mktemp)
         cat > "$TMP_GET" <<EOF
@@ -1033,34 +980,19 @@ EOF
         LOCAL_TXT="$LOCAL_CONFIRM_DIR/$FNAME"
         if [[ -f "$LOCAL_TXT" ]]; then
             SEEN_DEPLOY_FILES[$FNAME]=1
-            if [[ "$FNAME" == *"_Deploy_Failed_"* ]]; then
-                FAILED_RESULT_FILES+=("$LOCAL_TXT")
-                R_SERVER=$(grep -E 'WatcherNode=' "$LOCAL_TXT" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_SERVER=""
-                if [[ -z "$R_SERVER" ]]; then R_SERVER="${FNAME%.txt}"; R_SERVER="${R_SERVER##*_}"; fi
-                log ""
-                log "   📥 Response from server: $R_SERVER → Status: Failed"
-                cat "$LOCAL_TXT" | while IFS= read -r rline; do log "      | $rline"; done
-                cicd_server_result_from_file "$LOCAL_TXT" "FAILED"
-                continue
-            fi
             WATCHER_RESULT_FILES+=("$LOCAL_TXT")
             R_SERVER=$(grep -E 'WatcherNode=' "$LOCAL_TXT" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_SERVER="?"
-            R_STATUS=$(grep -E '^Status=' "$LOCAL_TXT" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_STATUS="?"
+            R_STATUS=$(grep -E 'Status=' "$LOCAL_TXT" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_STATUS="?"
             log ""
             log "   📥 Response from server: $R_SERVER → Status: $R_STATUS"
             cat "$LOCAL_TXT" | while IFS= read -r rline; do log "      | $rline"; done
-            cicd_server_result_from_file "$LOCAL_TXT" "SUCCESS"
         fi
     done < "$TMP_LIST"
     rm -f "$TMP_LIST"
 
     RECEIVED=${#WATCHER_RESULT_FILES[@]}
-    FAILED_N=${#FAILED_RESULT_FILES[@]}
     if [[ $RECEIVED -ge $SERVER_COUNT ]]; then
         WATCHER_CONFIRMED=true
-        break
-    elif (( RECEIVED + FAILED_N >= SERVER_COUNT )); then
-        log "   ❌ All $SERVER_COUNT server(s) responded — $FAILED_N reported a failed deployment"
         break
     fi
 
@@ -1074,11 +1006,6 @@ done
 set -e
 
 RECEIVED=${#WATCHER_RESULT_FILES[@]}
-if [[ "$WATCHER_CONFIRMED" == true ]]; then
-    cicd_step "WAIT_WATCHER" "SUCCESS" "$T_WAIT"
-else
-    cicd_step "WAIT_WATCHER" "FAILED" "$T_WAIT"
-fi
 
 # ==================================================
 # STEP 5: WATCHER CONFIRMED
@@ -1143,14 +1070,6 @@ if [[ "$WATCHER_CONFIRMED" == true ]]; then
 else
     log "   ⏭  Skipped — watcher did not confirm the deployment"
 fi
-
-# ---- CI/CD telemetry: smoke result + final status of the run ----
-if [[ ${#WATCHER_RESULT_FILES[@]} -gt 0 ]]; then cicd_set_smoke_from_file "${WATCHER_RESULT_FILES[0]}"; fi
-CICD_FAIL_REASON=""
-if [[ ${#FAILED_RESULT_FILES[@]} -gt 0 ]]; then
-    CICD_FAIL_REASON=$(grep -E '^Error=' "${FAILED_RESULT_FILES[0]}" | head -1 | cut -d'=' -f2- | tr -d '\r') || CICD_FAIL_REASON=""
-fi
-cicd_finish_auto "$RECEIVED" "${#FAILED_RESULT_FILES[@]}" "$SERVER_COUNT" "$CICD_FAIL_REASON"
 
 # ==================================================
 # STEP 7: SEND EMAIL
@@ -1269,7 +1188,7 @@ cat > "$HTML_FILE" << HTMLEOF
         echo "<tr style='background:#f5f5f5;'><th style='padding:8px;text-align:left;'>Server</th><th style='padding:8px;text-align:left;'>Status</th><th style='padding:8px;text-align:left;'>IIS</th><th style='padding:8px;text-align:left;'>Pool</th></tr>"
         for TXT_FILE in "${WATCHER_RESULT_FILES[@]}"; do
           R_SERVER=$(grep -E 'WatcherNode=' "$TXT_FILE" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_SERVER="?"
-          R_STATUS=$(grep -E '^Status=' "$TXT_FILE" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_STATUS="?"
+          R_STATUS=$(grep -E 'Status=' "$TXT_FILE" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_STATUS="?"
           R_IIS=$(grep -E 'IISRestart=' "$TXT_FILE" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_IIS="?"
           R_POOL=$(grep -E 'Pool=' "$TXT_FILE" | head -1 | cut -d'=' -f2- | tr -d '\r') || R_POOL="?"
           R_COLOR="#2e7d32"; [[ "$R_STATUS" != "Success" ]] && R_COLOR="#c62828"
