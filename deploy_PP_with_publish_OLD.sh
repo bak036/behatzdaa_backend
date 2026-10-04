@@ -4,6 +4,8 @@
 # deploy_PP_with_publish.sh - beazdaa_backend
 # Builds & publishes  locally, packages it,
 # and uploads it to the PP remote server.
+# and uploads it to the PP remote server.
+
 # ===========================================================
 
 set -e

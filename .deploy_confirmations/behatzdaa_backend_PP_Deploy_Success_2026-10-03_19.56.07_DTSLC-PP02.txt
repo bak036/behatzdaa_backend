@@ -1,0 +1,14 @@
+﻿Branch=PP
+Time=2026-10-03 19:56:17
+DeployPath=C:\inetpub\wwwroot\site\Productions\Behatsdaa_NofshonitBackApi
+Site=Behatsdaa_NofshonitBackApi
+TriggeredBy=AutoDeploy
+IISRestart=[2026-10-03 19:56:15] ▶ Starting IIS app pool → Behatsdaa_NofshonitBackApi [2026-10-03 19:56:17] ▶ Starting IIS site → Behatsdaa_NofshonitBackApi [2026-10-03 19:56:17]    ⏳ Verifying IIS started... [2026-10-03 19:56:17]    ✓ App pool confirmed started (after 0s) [2026-10-03 19:56:17]    ✓ Site confirmed running Yes
+Project=behatzdaa_backend
+BackupPath=C:\inetpub\wwwroot\site\Productions\Behatsdaa_NofshonitBackApi.2026-10-03_19.56.07
+SmokeTestDetail=No smoke test directory configured for this project
+Status=Success
+Pool=Behatsdaa_NofshonitBackApi
+DeploymentType=Standard
+SmokeTestStatus=Skipped
+WatcherNode=DTSLC-PP02
