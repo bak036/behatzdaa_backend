@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ===========================================================
-# deploy_PP_with_publish.sh - beyahad_backend
+# deploy_PP_with_publish.sh - beazdaa_backend
 # Builds & publishes  locally, packages it,
 # and uploads it to the PP remote server.
 # ===========================================================
@@ -230,6 +230,9 @@ fi
 #   DB_NAME=NofTest
 #   DB_USER=sqladmin
 #   DB_PASSWORD=********
+# (optional) SFTP_UPLOAD_DIR / SFTP_CONFIRM_DIR — default /pp
+# SFTP host/port/user/password are NOT in .env: they are read from
+# NofTest..GlobalSettings (SftpHost, SftpPort, SftpUser, SftpPassword).
 #
 # NOTE: this block is placed AFTER the log() definition above (the
 # original version of this script called log() from inside the
@@ -252,10 +255,9 @@ set +a
 : "${DB_NAME:?Missing DB_NAME in .env}"
 : "${DB_USER:?Missing DB_USER in .env}"
 : "${DB_PASSWORD:?Missing DB_PASSWORD in .env}"
-: "${SFTP_HOST:?Missing SFTP_HOST in .env}"
-: "${SFTP_PORT:?Missing SFTP_PORT in .env}"
-: "${SFTP_USER:?Missing SFTP_USER in .env}"
-: "${SFTP_PASSWORD:?Missing SFTP_PASSWORD in .env}"
+# SFTP_HOST / SFTP_PORT / SFTP_USER / SFTP_PASSWORD are no longer read from .env —
+# they are loaded from NofTest..GlobalSettings (SftpHost/SftpPort/SftpUser/SftpPassword)
+# together with the project config further below.
 SFTP_UPLOAD_DIR="${SFTP_UPLOAD_DIR:-/pp}"
 SFTP_CONFIRM_DIR="${SFTP_CONFIRM_DIR:-/pp}"
 
@@ -530,13 +532,17 @@ while (( db_attempt <= DB_MAX_RETRIES )); do
         # parent bash process (loaded from .env via "set -a; source .env")
         # — never hardcoded here.
         $connectionString = "Server=$($env:DB_SERVER);Database=$($env:DB_NAME);User ID=$($env:DB_USER);Password=$($env:DB_PASSWORD);TrustServerCertificate=True;";
-        $query = "SELECT TOP 1 * FROM ProjectDepJoyConfig WHERE Project='"'$PROJECT_NAME'"' AND Branch='"'$BRANCH'"' ORDER BY ID DESC";
+        $query = "SELECT TOP 1 ProjectName, Branch, LocalPublishDir, ZipPath FROM ProjectRules WHERE ProjectName='"'$PROJECT_NAME'"' AND Branch='"'$BRANCH'"' AND LocalPublishDir IS NOT NULL AND LEN(LocalPublishDir) > 0";
         $result = Invoke-Sqlcmd -ConnectionString $connectionString -Query $query -ErrorAction Stop;
         if ($null -eq $result) {
           Write-Output "NO_RESULTS"
         } else {
+          # SFTP connection details live in GlobalSettings (not in .env)
+          $gsRows = Invoke-Sqlcmd -ConnectionString $connectionString -Query "SELECT SettingKey, SettingValue FROM GlobalSettings WHERE SettingKey LIKE '"'Sftp%'"'" -ErrorAction Stop;
+          $gs = @{};
+          foreach ($g in $gsRows) { $gs[[string]$g.SettingKey] = [string]$g.SettingValue }
           foreach ($row in $result) {
-            $line = ($row.Project + "|||" + $row.Branch + "|||" + $row.RemoteServer + "|||" + $row.RemoteUser + "|||" + $row.RemotePassword + "|||" + $row.LocalPublishDir + "|||" + $row.ZipPath)
+            $line = ($row.ProjectName + "|||" + $row.Branch + "|||" + $row.LocalPublishDir + "|||" + $row.ZipPath + "|||" + $gs["SftpHost"] + "|||" + $gs["SftpPort"] + "|||" + $gs["SftpUser"] + "|||" + $gs["SftpPassword"])
             Write-Output $line
           }
         }
@@ -561,21 +567,33 @@ if [[ "$db_values" == ERROR* ]]; then
     log "   $db_values"
     exit 1
 elif [[ "$db_values" == "NO_RESULTS" ]]; then
-    log "❌ No config found for $PROJECT_NAME / $BRANCH"
+    log "❌ No ProjectRules config (with LocalPublishDir) found for $PROJECT_NAME / $BRANCH"
     exit 1
 fi
 
 PROJECT=$(echo "$db_values" | awk -F'\\|\\|\\|' '{print $1}')
 BRANCH=$(echo "$db_values" | awk -F'\\|\\|\\|' '{print $2}')
-REMOTE_SERVER=$(echo "$db_values" | awk -F'\\|\\|\\|' '{print $3}')
-REMOTE_USER=$(echo "$db_values" | awk -F'\\|\\|\\|' '{print $4}')
-REMOTE_PASSWORD=$(echo "$db_values" | awk -F'\\|\\|\\|' '{print $5}')
-LOCAL_PUBLISH_DIR=$(echo "$db_values" | awk -F'\\|\\|\\|' '{print $6}')
-ZIP_PATH=$(echo "$db_values" | awk -F'\\|\\|\\|' '{print $7}')
+LOCAL_PUBLISH_DIR=$(echo "$db_values" | awk -F'\\|\\|\\|' '{print $3}')
+ZIP_PATH=$(echo "$db_values" | awk -F'\\|\\|\\|' '{print $4}')
+# SFTP connection details come from NofTest..GlobalSettings (not from .env)
+SFTP_HOST=$(echo "$db_values" | awk -F'\\|\\|\\|' '{print $5}' | tr -d '\r')
+SFTP_PORT=$(echo "$db_values" | awk -F'\\|\\|\\|' '{print $6}' | tr -d '\r')
+SFTP_USER=$(echo "$db_values" | awk -F'\\|\\|\\|' '{print $7}' | tr -d '\r')
+SFTP_PASSWORD=$(echo "$db_values" | awk -F'\\|\\|\\|' '{print $8}' | tr -d '\r')
 
-RAW_REMOTE="$REMOTE_SERVER"
 RAW_LOCAL="$LOCAL_PUBLISH_DIR"
 RAW_ZIP="$ZIP_PATH"
+
+if [[ -z "$LOCAL_PUBLISH_DIR" || -z "$ZIP_PATH" ]]; then
+    log "❌ ProjectRules.LocalPublishDir / ZipPath is empty for $PROJECT_NAME / $BRANCH"
+    exit 1
+fi
+for _k in SFTP_HOST SFTP_PORT SFTP_USER SFTP_PASSWORD; do
+    if [[ -z "${!_k}" ]]; then
+        log "❌ Missing SFTP setting in NofTest..GlobalSettings (${_k} → SftpHost/SftpPort/SftpUser/SftpPassword)"
+        exit 1
+    fi
+done
 
 log "   ✓ Config loaded"
 log ""
@@ -605,7 +623,6 @@ normalize_path() {
     echo "$path"
 }
 
-REMOTE_SERVER=$(normalize_path "$REMOTE_SERVER")
 LOCAL_PUBLISH_DIR=$(normalize_path "$LOCAL_PUBLISH_DIR")
 ZIP_PATH=$(normalize_path "$ZIP_PATH")
 
@@ -720,9 +737,9 @@ log "   ✓ Legacy NuGet packages restored"
 log ""
 
 # ==================================================
-# STEP 1: BUILD & PUBLISH Beyahad_Backend
+# STEP 1: BUILD & PUBLISH Beazdaa_Backend
 # ==================================================
-# NOTE: Beyahad_Backend.sln contains multiple projects (Nofshonit.Infrastructure,
+# NOTE: Beazdaa_Backend.sln contains multiple projects (Nofshonit.Infrastructure,
 # Nofshonit.Common, Nofshonit.Services, Nofshonit.BL, Nofshonit.Repositories,
 # TicketsHubRepository, OrderDll, Nofshonit.Logs, and a broken external reference
 # ManagementStockClientCP under ..\dts.ecommerce\ which isn't checked out here).
@@ -739,7 +756,7 @@ if [[ ! -f "$CSPROJ" ]]; then
     exit 1
 fi
 
-log "📦 Publishing Beyahad_Backend: $(basename "$CSPROJ")..."
+log "📦 Publishing Beazdaa_Backend: $(basename "$CSPROJ")..."
 
 dotnet publish \
     "$CSPROJ" \
@@ -1108,7 +1125,7 @@ fi
 # ==================================================
 # STEP 6: SMOKE TEST RESULT (read from watcher — tests run server-side)
 # ==================================================
-# No smoke suite is configured for Beyahad_Backend yet, so this will
+# No smoke suite is configured for Beazdaa_Backend yet, so this will
 # currently always come back "Skipped" — but it now reads that status
 # from the watcher (like DCODE does) rather than hardcoding the message,
 # so nothing needs to change here once a smoke suite IS added later; the
